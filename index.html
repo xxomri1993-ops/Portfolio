@@ -12,16 +12,23 @@
 </head>
 <body>
 
+<!-- ===================== AMBIENT BACKGROUND ===================== -->
+<div class="ambient-bg" aria-hidden="true">
+  <div class="ambient-blob ambient-blob--violet"></div>
+  <div class="ambient-blob ambient-blob--amber"></div>
+  <div class="ambient-grain"></div>
+</div>
+
 <!-- ===================== NAV ===================== -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
-    <a href="#hero" class="logo" data-tab-link="hero">Omri Tabachnik</a>
+    <a href="#hero" class="logo">Omri Tabachnik</a>
 
     <nav class="main-nav" aria-label="Primary">
-      <ul class="tab-list" role="tablist">
-        <li><button class="tab-btn active" data-tab="tv-commercials" role="tab" aria-selected="true">TV Commercials</button></li>
-        <li><button class="tab-btn" data-tab="ai-showcase" role="tab" aria-selected="false">AI Showcase</button></li>
-        <li><button class="tab-btn" data-tab="performance-ads" role="tab" aria-selected="false">Performance Ads</button></li>
+      <ul class="nav-list">
+        <li><a class="nav-link" data-section="ai-showcase" href="#ai-showcase">AI Showcase</a></li>
+        <li><a class="nav-link" data-section="performance-ads" href="#performance-ads">Performance Ads</a></li>
+        <li><a class="nav-link" data-section="tv-commercials" href="#tv-commercials">TV Commercials</a></li>
       </ul>
     </nav>
 
@@ -33,7 +40,20 @@
 
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="hero">
-  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-bg-video" aria-hidden="true">
+    <!--
+      YOUTUBE BACKGROUND VIDEO - replace src with your YouTube embed link.
+      Autoplay/mute/loop are pre-configured in the query string below — keep those
+      params and just swap VIDEO_ID (it appears twice: once in the path, once in
+      the playlist param, which is what makes the loop work).
+
+      Example:
+      src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1"
+    -->
+    <iframe class="bg-yt" src="" title="Background reel" frameborder="0" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+
   <div class="hero-content">
     <p class="hero-eyebrow">Portfolio</p>
     <h1 class="hero-name">Omri Tabachnik</h1>
@@ -49,156 +69,168 @@
   </div>
 </section>
 
-<!-- ===================== WORK / TABS ===================== -->
+<!-- ===================== WORK SECTIONS ===================== -->
 <main id="work">
 
-  <!-- TAB 1: TV COMMERCIALS -->
-  <section class="tab-panel active" id="tv-commercials" data-panel="tv-commercials">
-    <div class="panel-inner">
-      <header class="panel-header">
-        <span class="panel-index">01</span>
-        <h2 class="panel-title">TV Commercials</h2>
-        <p class="panel-subtitle">Full AI production pipeline – from concept to broadcast-ready delivery, without a camera or crew.</p>
+  <!-- SECTION: AI SHOWCASE -->
+  <section class="work-section" id="ai-showcase" data-section="ai-showcase">
+    <div class="section-inner">
+      <header class="section-header">
+        <span class="section-index">01</span>
+        <h2 class="section-title">AI Showcase</h2>
+        <p class="section-subtitle">Pushing the boundaries of what's possible with generative AI tools.</p>
       </header>
 
-      <div class="video-grid two-col">
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="TV Commercial 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      <div class="carousel">
+        <button class="carousel-arrow prev" aria-label="Scroll AI Showcase left">‹</button>
+        <div class="carousel-track">
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 01</p>
           </div>
-          <p class="video-label">Commercial 01</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="TV Commercial 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 02</p>
           </div>
-          <p class="video-label">Commercial 02</p>
+
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 03</p>
+          </div>
+
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 04</p>
+          </div>
+
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 05</p>
+          </div>
+
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="AI Showcase 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Showcase 06</p>
+          </div>
         </div>
+        <button class="carousel-arrow next" aria-label="Scroll AI Showcase right">›</button>
       </div>
     </div>
   </section>
 
-  <!-- TAB 2: AI SHOWCASE -->
-  <section class="tab-panel" id="ai-showcase" data-panel="ai-showcase">
-    <div class="panel-inner">
-      <header class="panel-header">
-        <span class="panel-index">02</span>
-        <h2 class="panel-title">AI Showcase</h2>
-        <p class="panel-subtitle">Pushing the boundaries of what's possible with generative AI tools.</p>
+  <!-- SECTION: PERFORMANCE ADS -->
+  <section class="work-section" id="performance-ads" data-section="performance-ads">
+    <div class="section-inner">
+      <header class="section-header">
+        <span class="section-index">02</span>
+        <h2 class="section-title">Performance Ads</h2>
+        <p class="section-subtitle">Content built to stop the scroll, speak to pain points, and convert.</p>
       </header>
 
-      <div class="video-grid three-col">
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      <div class="carousel">
+        <button class="carousel-arrow prev" aria-label="Scroll Performance Ads left">‹</button>
+        <div class="carousel-track">
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 01</p>
           </div>
-          <p class="video-label">Showcase 01</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 02</p>
           </div>
-          <p class="video-label">Showcase 02</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 03</p>
           </div>
-          <p class="video-label">Showcase 03</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 04</p>
           </div>
-          <p class="video-label">Showcase 04</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 05</p>
           </div>
-          <p class="video-label">Showcase 05</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="AI Showcase 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="Performance Ad 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Ad 06</p>
           </div>
-          <p class="video-label">Showcase 06</p>
         </div>
+        <button class="carousel-arrow next" aria-label="Scroll Performance Ads right">›</button>
       </div>
     </div>
   </section>
 
-  <!-- TAB 3: PERFORMANCE ADS -->
-  <section class="tab-panel" id="performance-ads" data-panel="performance-ads">
-    <div class="panel-inner">
-      <header class="panel-header">
-        <span class="panel-index">03</span>
-        <h2 class="panel-title">Performance Ads</h2>
-        <p class="panel-subtitle">Content built to stop the scroll, speak to pain points, and convert.</p>
+  <!-- SECTION: TV COMMERCIALS -->
+  <section class="work-section" id="tv-commercials" data-section="tv-commercials">
+    <div class="section-inner">
+      <header class="section-header">
+        <span class="section-index">03</span>
+        <h2 class="section-title">TV Commercials</h2>
+        <p class="section-subtitle">Full AI production pipeline – from concept to broadcast-ready delivery, without a camera or crew.</p>
       </header>
 
-      <div class="video-grid three-col">
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      <div class="carousel">
+        <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">‹</button>
+        <div class="carousel-track">
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="TV Commercial 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Commercial 01</p>
           </div>
-          <p class="video-label">Ad 01</p>
-        </div>
 
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+          <div class="video-card">
+            <div class="video-wrapper">
+              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
+              <iframe class="youtube-embed" src="" title="TV Commercial 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+            </div>
+            <p class="video-label">Commercial 02</p>
           </div>
-          <p class="video-label">Ad 02</p>
         </div>
-
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-          </div>
-          <p class="video-label">Ad 03</p>
-        </div>
-
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-          </div>
-          <p class="video-label">Ad 04</p>
-        </div>
-
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-          </div>
-          <p class="video-label">Ad 05</p>
-        </div>
-
-        <div class="video-card">
-          <div class="video-wrapper">
-            <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-            <iframe class="youtube-embed" src="" title="Performance Ad 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-          </div>
-          <p class="video-label">Ad 06</p>
-        </div>
+        <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">›</button>
       </div>
     </div>
   </section>

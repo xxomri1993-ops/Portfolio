@@ -23,43 +23,63 @@ document.addEventListener('DOMContentLoaded', () => {
     menuToggle.setAttribute('aria-expanded', String(isOpen));
   });
 
-  /* ---------- Tab switching ---------- */
-  const tabButtons = document.querySelectorAll('.tab-btn');
-  const tabPanels = document.querySelectorAll('.tab-panel');
-
-  const activateTab = (tabId, { scroll = true } = {}) => {
-    tabButtons.forEach((btn) => {
-      const isActive = btn.dataset.tab === tabId;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-selected', String(isActive));
-    });
-
-    tabPanels.forEach((panel) => {
-      panel.classList.toggle('active', panel.dataset.panel === tabId);
-    });
-
-    if (scroll) {
-      const work = document.getElementById('work');
-      work.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    history.replaceState(null, '', `#${tabId}`);
-    observeVideoCards();
-  };
-
-  tabButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      activateTab(btn.dataset.tab);
-      closeMenu();
-    });
+  document.querySelectorAll('.nav-link').forEach((link) => {
+    link.addEventListener('click', closeMenu);
   });
 
-  // Deep-link support (e.g. loading the page with #ai-showcase)
-  const initialHash = window.location.hash.replace('#', '');
-  const validTabs = Array.from(tabPanels).map((p) => p.dataset.panel);
-  if (validTabs.includes(initialHash)) {
-    activateTab(initialHash, { scroll: false });
+  /* ---------- Scroll-spy nav highlighting ---------- */
+  const navLinks = document.querySelectorAll('.nav-link');
+  const workSections = document.querySelectorAll('.work-section');
+
+  const setActiveNav = (sectionId) => {
+    navLinks.forEach((link) => {
+      link.classList.toggle('active', link.dataset.section === sectionId);
+    });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveNav(entry.target.dataset.section);
+          }
+        });
+      },
+      { rootMargin: '-35% 0px -55% 0px', threshold: 0 }
+    );
+    workSections.forEach((section) => spy.observe(section));
   }
+
+  /* ---------- Carousels ---------- */
+  document.querySelectorAll('.carousel').forEach((carousel) => {
+    const track = carousel.querySelector('.carousel-track');
+    const prevBtn = carousel.querySelector('.carousel-arrow.prev');
+    const nextBtn = carousel.querySelector('.carousel-arrow.next');
+    if (!track || !prevBtn || !nextBtn) return;
+
+    const scrollByAmount = () => track.clientWidth * 0.85;
+
+    prevBtn.addEventListener('click', () => {
+      track.scrollBy({ left: -scrollByAmount(), behavior: 'smooth' });
+    });
+
+    nextBtn.addEventListener('click', () => {
+      track.scrollBy({ left: scrollByAmount(), behavior: 'smooth' });
+    });
+
+    const updateArrows = () => {
+      const maxScroll = track.scrollWidth - track.clientWidth - 1;
+      prevBtn.disabled = track.scrollLeft <= 0;
+      nextBtn.disabled = track.scrollLeft >= maxScroll;
+      prevBtn.style.opacity = prevBtn.disabled ? '0.35' : '1';
+      nextBtn.style.opacity = nextBtn.disabled ? '0.35' : '1';
+    };
+
+    track.addEventListener('scroll', updateArrows, { passive: true });
+    window.addEventListener('resize', updateArrows);
+    updateArrows();
+  });
 
   /* ---------- Fade-in video cards on scroll ---------- */
   const io = 'IntersectionObserver' in window
@@ -76,17 +96,13 @@ document.addEventListener('DOMContentLoaded', () => {
       )
     : null;
 
-  function observeVideoCards() {
-    document.querySelectorAll('.video-card:not(.in-view)').forEach((card) => {
-      if (io) {
-        io.observe(card);
-      } else {
-        card.classList.add('in-view');
-      }
-    });
-  }
-
-  observeVideoCards();
+  document.querySelectorAll('.video-card').forEach((card) => {
+    if (io) {
+      io.observe(card);
+    } else {
+      card.classList.add('in-view');
+    }
+  });
 
   /* ---------- Footer year ---------- */
   const yearEl = document.getElementById('year');
