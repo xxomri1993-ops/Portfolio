@@ -26,6 +26,7 @@
 <div class="ambient-bg" aria-hidden="true">
   <div class="ambient-blob ambient-blob--violet"></div>
   <div class="ambient-blob ambient-blob--amber"></div>
+  <canvas class="ambient-canvas" id="ambientCanvas"></canvas>
   <div class="ambient-grain"></div>
 </div>
 
@@ -106,7 +107,14 @@
   ADDING / MOVING VIDEOS
   Each card is one line. `data-yt` is the YouTube ID (the part after /shorts/ or ?v=),
   `data-title` is the label under the card. To move a video between sections, move its
-  line. Use data-orientation="wide" on a card holding a 16:9 landscape video.
+  line.
+
+  Cards default to 9:16 (Shorts). For anything else add data-orientation:
+    data-orientation="wide"      16:9 landscape
+    data-orientation="square"    1:1
+    data-orientation="portrait"  4:5
+  Every card in a row keeps the same height and takes its width from its ratio, so
+  mixed formats sit together without the row going ragged.
 -->
 <main id="work">
 
@@ -282,7 +290,10 @@
   <button class="lightbox-close" id="lightboxClose" aria-label="Close video">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
   </button>
-  <div class="lightbox-stage" id="lightboxStage"></div>
+  <div class="lightbox-inner">
+    <div class="lightbox-stage" id="lightboxStage"></div>
+    <p class="lightbox-caption" id="lightboxCaption"></p>
+  </div>
 </div>
 
 <script src="js/script.js"></script>

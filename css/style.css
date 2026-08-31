@@ -21,6 +21,7 @@
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --shell: 5vw;
+  --card-h: clamp(300px, 42vh, 440px);
 }
 
 * {
@@ -117,6 +118,14 @@ img {
 @keyframes driftTwo {
   0%, 100% { transform: translate(0, 0) scale(1); }
   50% { transform: translate(-5vmax, -6vmax) scale(1.08); }
+}
+
+/* Light rays and drifting dust, painted in js/script.js. */
+.ambient-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .ambient-grain {
@@ -248,6 +257,10 @@ img {
   height: 32px;
   background: none;
   border: none;
+  /* Must out-rank the open nav panel (z-index 90) or the panel swallows the
+     click that closes it. */
+  position: relative;
+  z-index: 95;
 }
 
 .menu-toggle span {
@@ -574,11 +587,6 @@ main {
   gap: 8px;
 }
 
-/* Beats the UA [hidden] rule, which a class-level display would otherwise win against. */
-.carousel-nav[hidden] {
-  display: none;
-}
-
 .carousel-arrow {
   width: 40px;
   height: 40px;
@@ -624,8 +632,11 @@ main {
 
 /* ============================= VIDEO CARDS ============================= */
 
+/* Every card in a row is the same HEIGHT and takes its width from its own aspect
+   ratio, so vertical, square and landscape videos can sit in one row without the
+   row going ragged. */
 .video-card {
-  flex: 0 0 clamp(210px, 21vw, 280px);
+  flex: 0 0 auto;
   scroll-snap-align: start;
   opacity: 0;
   transform: translateY(20px);
@@ -637,26 +648,31 @@ main {
   transform: translateY(0);
 }
 
-.video-card[data-orientation="wide"] {
-  flex-basis: clamp(300px, 34vw, 460px);
-}
-
 .video-thumb {
   position: relative;
   display: block;
-  width: 100%;
+  height: var(--card-h);
+  width: auto;
   aspect-ratio: 9 / 16;
   padding: 0;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: 12px;
   overflow: hidden;
-  transition: border-color 0.4s var(--ease), transform 0.4s var(--ease),
-    box-shadow 0.4s var(--ease);
+  transition: border-color 0.4s var(--ease), transform 0.45s var(--ease),
+    box-shadow 0.45s var(--ease);
 }
 
 .video-card[data-orientation="wide"] .video-thumb {
   aspect-ratio: 16 / 9;
+}
+
+.video-card[data-orientation="square"] .video-thumb {
+  aspect-ratio: 1 / 1;
+}
+
+.video-card[data-orientation="portrait"] .video-thumb {
+  aspect-ratio: 4 / 5;
 }
 
 .video-thumb img {
@@ -665,7 +681,14 @@ main {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.6s var(--ease), opacity 0.4s var(--ease);
+  /* Revealed only once a poster frame actually decodes, so a slow or failed
+     request shows the styled fallback instead of a broken-image icon. */
+  opacity: 0;
+  transition: transform 0.6s var(--ease), opacity 0.5s var(--ease);
+}
+
+.video-thumb img.loaded {
+  opacity: 1;
 }
 
 .video-thumb::after {
@@ -680,8 +703,8 @@ main {
 .video-card:hover .video-thumb,
 .video-thumb:focus-visible {
   border-color: var(--border-hover);
-  transform: translateY(-5px);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px) scale(1.035);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
 }
 
 .video-card:hover .video-thumb img {
@@ -923,22 +946,39 @@ main {
   to { opacity: 1; }
 }
 
+.lightbox-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: popIn 0.45s var(--ease);
+}
+
 .lightbox-stage {
   position: relative;
   aspect-ratio: 9 / 16;
-  height: min(88vh, 900px);
-  max-width: 92vw;
-  border-radius: 14px;
+  height: min(90vh, 1000px);
+  max-width: 94vw;
+  border-radius: 16px;
   overflow: hidden;
   background: #000;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
-  animation: popIn 0.4s var(--ease);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .lightbox-stage[data-orientation="wide"] {
   aspect-ratio: 16 / 9;
   height: auto;
-  width: min(1120px, 92vw);
+  width: min(1320px, 94vw);
+}
+
+.lightbox-stage[data-orientation="square"] {
+  aspect-ratio: 1 / 1;
+  height: min(84vh, 900px);
+}
+
+.lightbox-stage[data-orientation="portrait"] {
+  aspect-ratio: 4 / 5;
+  height: min(88vh, 950px);
 }
 
 .lightbox-stage iframe {
@@ -949,9 +989,17 @@ main {
   border: 0;
 }
 
+.lightbox-caption {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
 @keyframes popIn {
-  from { opacity: 0; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1); }
+  from { opacity: 0; transform: scale(0.88) translateY(14px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 .lightbox-close {
@@ -1051,14 +1099,6 @@ main {
     padding: 72px var(--shell);
   }
 
-  .video-card {
-    flex-basis: 58vw;
-  }
-
-  .video-card[data-orientation="wide"] {
-    flex-basis: 86vw;
-  }
-
   .contact {
     padding: 84px var(--shell) 40px;
   }
@@ -1078,12 +1118,12 @@ main {
 }
 
 @media (max-width: 560px) {
-  .process-steps {
-    grid-template-columns: 1fr;
+  :root {
+    --card-h: min(58vh, 400px);
   }
 
-  .video-card {
-    flex-basis: 72vw;
+  .process-steps {
+    grid-template-columns: 1fr;
   }
 
   .hero-actions .btn {
