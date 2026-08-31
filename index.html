@@ -4,10 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Omri Tabachnik — AI Video Editor & Content Producer</title>
-<meta name="description" content="Omri Tabachnik — AI Video Editor & Content Producer. Broadcast-quality video production powered by a full AI pipeline.">
+<meta name="description" content="Omri Tabachnik — AI Video Editor & Content Producer. Broadcast-quality video production powered by a full AI pipeline, without a crew, a camera, or a lengthy production cycle.">
+
+<!-- Link previews (WhatsApp, LinkedIn, X). Swap og:image for a still from your reel. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Omri Tabachnik — AI Video Editor & Content Producer">
+<meta property="og:description" content="Broadcast-quality video production powered by a full AI pipeline — without a crew, a camera, or a lengthy production cycle.">
+<meta property="og:image" content="https://i.ytimg.com/vi/DZjT7-xcIZI/maxresdefault.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2306050c'/%3E%3Cpath d='M13 10.5l9 5.5-9 5.5z' fill='%23f0b25e'/%3E%3C/svg%3E">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -29,8 +39,12 @@
         <li><a class="nav-link" data-section="ai-showcase" href="#ai-showcase">AI Showcase</a></li>
         <li><a class="nav-link" data-section="performance-ads" href="#performance-ads">Performance Ads</a></li>
         <li><a class="nav-link" data-section="tv-commercials" href="#tv-commercials">TV Commercials</a></li>
+        <li><a class="nav-link" data-section="process" href="#process">Process</a></li>
+        <li class="nav-cta-mobile"><a class="nav-cta" href="#contact">Get in touch</a></li>
       </ul>
     </nav>
+
+    <a class="nav-cta nav-cta--desktop" href="#contact">Get in touch</a>
 
     <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
@@ -42,97 +56,88 @@
 <section class="hero" id="hero">
   <div class="hero-bg-video" aria-hidden="true">
     <!--
-      YOUTUBE BACKGROUND VIDEO - replace src with your YouTube embed link.
-      Autoplay/mute/loop are pre-configured in the query string below — keep those
-      params and just swap VIDEO_ID (it appears twice: once in the path, once in
-      the playlist param, which is what makes the loop work).
-
-      Example:
-      src="https://www.youtube.com/embed/VIDEO_ID?autoplay=1&mute=1&loop=1&playlist=VIDEO_ID&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1"
+      YOUTUBE BACKGROUND VIDEO — swap VIDEO_ID below (it appears twice: in the path
+      and in the playlist param, which is what makes it loop). Keep the other params.
+      The class `bg-yt--vertical` sizes it for a 9:16 (Shorts) source; remove that
+      class if you swap in a normal 16:9 landscape reel.
     -->
-    <iframe class="bg-yt" src="" title="Background reel" frameborder="0" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
+    <iframe class="bg-yt bg-yt--vertical"
+      src="https://www.youtube.com/embed/DZjT7-xcIZI?autoplay=1&mute=1&loop=1&playlist=DZjT7-xcIZI&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&disablekb=1"
+      title="Background reel" frameborder="0" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
   </div>
   <div class="hero-scrim" aria-hidden="true"></div>
 
   <div class="hero-content">
     <p class="hero-eyebrow">Portfolio</p>
     <h1 class="hero-name">Omri Tabachnik</h1>
-    <p class="hero-title">AI Video Editor &amp; Content Producer</p>
+    <p class="hero-title">AI Video Editor &amp; <em>Content Producer</em></p>
     <p class="hero-tagline">I combine a performance-first mindset with a full AI production pipeline — delivering broadcast-quality results without a crew, a camera, or a lengthy production cycle.</p>
-    <a href="#work" class="hero-cta">
-      <span>View Work</span>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </a>
+
+    <div class="hero-actions">
+      <!-- SHOWREEL — replace data-yt with your showreel's YouTube ID -->
+      <button class="btn btn--primary" data-lightbox data-yt="DZjT7-xcIZI" data-orientation="vertical">
+        <svg width="13" height="15" viewBox="0 0 13 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 6.63397C12.6667 7.01887 12.6667 7.98113 12 8.36603L2.25 13.9952C1.58333 14.3801 0.749999 13.899 0.749999 13.1292L0.75 1.87083C0.75 1.10103 1.58333 0.619903 2.25 1.0048L12 6.63397Z" fill="currentColor"/></svg>
+        <span>Watch Showreel</span>
+      </button>
+      <a href="#work" class="btn btn--ghost">
+        <span>View Work</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
   </div>
-  <div class="scroll-cue" aria-hidden="true">
-    <span></span>
+</section>
+
+<!-- ===================== TOOLS STRIP ===================== -->
+<!-- EDIT: list the tools you actually work with — this is a placeholder set. -->
+<section class="tools" aria-label="Production stack">
+  <p class="tools-label">Production stack</p>
+  <div class="tools-marquee">
+    <ul class="tools-list">
+      <li>Sora</li><li>Veo</li><li>Runway</li><li>Kling</li><li>Midjourney</li><li>ElevenLabs</li><li>Topaz</li><li>Premiere Pro</li><li>After Effects</li><li>DaVinci Resolve</li>
+    </ul>
+    <ul class="tools-list" aria-hidden="true">
+      <li>Sora</li><li>Veo</li><li>Runway</li><li>Kling</li><li>Midjourney</li><li>ElevenLabs</li><li>Topaz</li><li>Premiere Pro</li><li>After Effects</li><li>DaVinci Resolve</li>
+    </ul>
   </div>
 </section>
 
 <!-- ===================== WORK SECTIONS ===================== -->
+<!--
+  ADDING / MOVING VIDEOS
+  Each card is one line. `data-yt` is the YouTube ID (the part after /shorts/ or ?v=),
+  `data-title` is the label under the card. To move a video between sections, move its
+  line. Use data-orientation="wide" on a card holding a 16:9 landscape video.
+-->
 <main id="work">
 
   <!-- SECTION: AI SHOWCASE -->
   <section class="work-section" id="ai-showcase" data-section="ai-showcase">
     <div class="section-inner">
       <header class="section-header">
-        <span class="section-index">01</span>
-        <h2 class="section-title">AI Showcase</h2>
-        <p class="section-subtitle">Pushing the boundaries of what's possible with generative AI tools.</p>
+        <div class="section-heading">
+          <h2 class="section-title">AI Showcase</h2>
+          <p class="section-subtitle">Pushing the boundaries of what's possible with generative AI tools.</p>
+        </div>
+        <div class="section-tools">
+          <span class="section-count"></span>
+          <div class="carousel-nav">
+            <button class="carousel-arrow prev" aria-label="Scroll AI Showcase left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="carousel-arrow next" aria-label="Scroll AI Showcase right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
       </header>
 
       <div class="carousel">
-        <button class="carousel-arrow prev" aria-label="Scroll AI Showcase left">‹</button>
         <div class="carousel-track">
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 01</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 02</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 03</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 04</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 05</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="AI Showcase 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Showcase 06</p>
-          </div>
+          <article class="video-card" data-yt="DZjT7-xcIZI" data-title="Showcase 01"></article>
+          <article class="video-card" data-yt="GGzilxPFZd8" data-title="Showcase 02"></article>
+          <article class="video-card" data-yt="13NoCsNjmCY" data-title="Showcase 03"></article>
+          <article class="video-card" data-yt="yR9HAw4kv8M" data-title="Showcase 04"></article>
         </div>
-        <button class="carousel-arrow next" aria-label="Scroll AI Showcase right">›</button>
       </div>
     </div>
   </section>
@@ -141,63 +146,30 @@
   <section class="work-section" id="performance-ads" data-section="performance-ads">
     <div class="section-inner">
       <header class="section-header">
-        <span class="section-index">02</span>
-        <h2 class="section-title">Performance Ads</h2>
-        <p class="section-subtitle">Content built to stop the scroll, speak to pain points, and convert.</p>
+        <div class="section-heading">
+          <h2 class="section-title">Performance Ads</h2>
+          <p class="section-subtitle">Content built to stop the scroll, speak to pain points, and convert.</p>
+        </div>
+        <div class="section-tools">
+          <span class="section-count"></span>
+          <div class="carousel-nav">
+            <button class="carousel-arrow prev" aria-label="Scroll Performance Ads left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="carousel-arrow next" aria-label="Scroll Performance Ads right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
       </header>
 
       <div class="carousel">
-        <button class="carousel-arrow prev" aria-label="Scroll Performance Ads left">‹</button>
         <div class="carousel-track">
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 01</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 02</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 03" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 03</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 04" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 04</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 05" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 05</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="Performance Ad 06" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Ad 06</p>
-          </div>
+          <article class="video-card" data-yt="NUs9HYyUguM" data-title="Ad 01"></article>
+          <article class="video-card" data-yt="K6O6zPC6_rU" data-title="Ad 02"></article>
+          <article class="video-card" data-yt="kqphbSJTq3o" data-title="Ad 03"></article>
+          <article class="video-card" data-yt="nR0WWfD5hzQ" data-title="Ad 04"></article>
         </div>
-        <button class="carousel-arrow next" aria-label="Scroll Performance Ads right">›</button>
       </div>
     </div>
   </section>
@@ -206,42 +178,76 @@
   <section class="work-section" id="tv-commercials" data-section="tv-commercials">
     <div class="section-inner">
       <header class="section-header">
-        <span class="section-index">03</span>
-        <h2 class="section-title">TV Commercials</h2>
-        <p class="section-subtitle">Full AI production pipeline – from concept to broadcast-ready delivery, without a camera or crew.</p>
+        <div class="section-heading">
+          <h2 class="section-title">TV Commercials</h2>
+          <p class="section-subtitle">Full AI production pipeline – from concept to broadcast-ready delivery, without a camera or crew.</p>
+        </div>
+        <div class="section-tools">
+          <span class="section-count"></span>
+          <div class="carousel-nav">
+            <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
       </header>
 
       <div class="carousel">
-        <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">‹</button>
         <div class="carousel-track">
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="TV Commercial 01" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Commercial 01</p>
-          </div>
-
-          <div class="video-card">
-            <div class="video-wrapper">
-              <!-- YOUTUBE EMBED - replace src with your YouTube embed link -->
-              <iframe class="youtube-embed" src="" title="TV Commercial 02" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-            </div>
-            <p class="video-label">Commercial 02</p>
-          </div>
+          <article class="video-card" data-yt="guh8q_uUDiM" data-title="Commercial 01"></article>
+          <article class="video-card" data-yt="y7d-ZNiBF4A" data-title="Commercial 02"></article>
+          <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Commercial 03"></article>
         </div>
-        <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">›</button>
       </div>
     </div>
   </section>
 
 </main>
 
+<!-- ===================== PROCESS ===================== -->
+<section class="process" id="process" data-section="process">
+  <div class="section-inner">
+    <header class="section-header">
+      <div class="section-heading">
+        <h2 class="section-title">How it gets made</h2>
+        <p class="section-subtitle">One operator, one pipeline, four stages — from a brief to a file that's ready to air.</p>
+      </div>
+    </header>
+
+    <ol class="process-steps">
+      <li class="process-step">
+        <span class="step-num">01</span>
+        <h3 class="step-title">Concept</h3>
+        <p class="step-body">Brief to script to storyboard. The idea is locked and shot-listed before a single frame is generated.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">02</span>
+        <h3 class="step-title">Generation</h3>
+        <p class="step-body">Characters, environments and coverage produced with generative video and image models, held to one visual language.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">03</span>
+        <h3 class="step-title">Edit &amp; Sound</h3>
+        <p class="step-body">Cut for pacing and retention, then graded, scored, and finished with voiceover and sound design.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">04</span>
+        <h3 class="step-title">Delivery</h3>
+        <p class="step-body">Broadcast-ready masters plus every aspect ratio and cutdown the campaign needs.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
 <!-- ===================== CONTACT ===================== -->
 <footer class="contact" id="contact">
   <div class="contact-inner">
     <p class="contact-eyebrow">Get in touch</p>
-    <h2 class="contact-heading">Let's create something.</h2>
+    <h2 class="contact-heading">Let's create <em>something</em>.</h2>
+    <p class="contact-body">Available for commercials, performance campaigns, and AI production consulting.</p>
 
     <div class="contact-details">
       <a href="mailto:xxomri1993@gmail.com" class="contact-link">
@@ -252,11 +258,32 @@
         <span class="contact-label">Phone</span>
         <span class="contact-value">054-6835851</span>
       </a>
+      <a href="https://wa.me/972546835851" class="contact-link" target="_blank" rel="noopener">
+        <span class="contact-label">WhatsApp</span>
+        <span class="contact-value">Message me</span>
+      </a>
     </div>
+
+    <!--
+      SOCIAL LINKS — uncomment and drop in your own profile URLs.
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/YOUR-HANDLE" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.youtube.com/@YOUR-HANDLE" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.instagram.com/YOUR-HANDLE" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    -->
 
     <p class="footer-note">&copy; <span id="year"></span> Omri Tabachnik. All rights reserved.</p>
   </div>
 </footer>
+
+<!-- ===================== LIGHTBOX ===================== -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Video player" hidden>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close video">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+  <div class="lightbox-stage" id="lightboxStage"></div>
+</div>
 
 <script src="js/script.js"></script>
 </body>
