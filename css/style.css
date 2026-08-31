@@ -378,7 +378,7 @@ main {
   transform: translateY(-4px);
 }
 
-.vimeo-embed {
+.youtube-embed {
   position: absolute;
   inset: 0;
   width: 100%;
