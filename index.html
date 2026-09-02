@@ -152,6 +152,22 @@
           <article class="video-card" data-yt="guh8q_uUDiM" data-title="Untitled 09" data-tags="AI"></article>
           <article class="video-card" data-yt="y7d-ZNiBF4A" data-title="Untitled 10" data-tags="AI"></article>
           <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Untitled 11" data-tags="AI"></article>
+          <article class="video-card" data-yt="tyELBIV5prs" data-title="Untitled 12" data-tags="AI"></article>
+          <article class="video-card" data-yt="aaKE8557U48" data-title="Untitled 13" data-tags="AI"></article>
+          <article class="video-card" data-yt="BwNXKIyPnCs" data-title="Untitled 14" data-tags="AI"></article>
+          <article class="video-card" data-yt="AUdQQy_OMtI" data-title="Untitled 15" data-tags="AI"></article>
+          <article class="video-card" data-yt="fduaXcz3foI" data-title="Untitled 16" data-tags="AI"></article>
+          <article class="video-card" data-yt="-KaUUkdd9Uw" data-title="Untitled 17" data-tags="AI"></article>
+          <article class="video-card" data-yt="6cqltnpe2IQ" data-title="Untitled 18" data-tags="AI"></article>
+          <article class="video-card" data-yt="9i9TYhpJthE" data-title="Untitled 19" data-tags="AI"></article>
+          <article class="video-card" data-yt="NFsDbdWQqCg" data-title="Untitled 20" data-tags="AI"></article>
+          <article class="video-card" data-yt="hR3cKeIJlfc" data-title="Untitled 21" data-tags="AI"></article>
+          <article class="video-card" data-yt="Cw2QR0MFm6s" data-title="Untitled 22" data-tags="AI"></article>
+          <article class="video-card" data-yt="vgZyuttWG48" data-title="Untitled 23" data-tags="AI"></article>
+          <!-- These two came through as regular youtu.be links rather than /shorts/,
+               so they're marked landscape. Drop data-orientation if either is vertical. -->
+          <article class="video-card" data-yt="Umf475f98Ns" data-title="Untitled 24" data-tags="AI" data-orientation="wide"></article>
+          <article class="video-card" data-yt="EDsswArNDEU" data-title="Untitled 25" data-tags="AI" data-orientation="wide"></article>
         </div>
       </div>
 
@@ -166,11 +182,20 @@
     <header class="section-header">
       <div class="section-heading">
         <h2 class="section-title">How it gets made</h2>
-        <p class="section-subtitle">One operator, one pipeline, four stages — from a brief to a file that's ready to run.</p>
+        <p class="section-subtitle">One operator, four stages, whichever pipeline the job calls for — from a brief to a file that's ready to run.</p>
       </div>
     </header>
 
-    <ol class="process-steps">
+    <!--
+      Two pipelines share one set of four stages. Only the copy swaps, so the page
+      shows you work both ways without printing eight near-identical cards.
+    -->
+    <div class="pipeline-switch" role="tablist" aria-label="Choose a pipeline">
+      <button class="pipeline-tab active" role="tab" aria-selected="true" data-pipeline="ai">AI Pipeline</button>
+      <button class="pipeline-tab" role="tab" aria-selected="false" data-pipeline="live">Live Action</button>
+    </div>
+
+    <ol class="process-steps" data-pipeline-panel="ai">
       <li class="process-step">
         <span class="step-num">01</span>
         <h3 class="step-title">Concept</h3>
@@ -190,6 +215,29 @@
         <span class="step-num">04</span>
         <h3 class="step-title">Delivery</h3>
         <p class="step-body">Mastered for wherever it runs — broadcast, paid social, or in-feed — in every aspect ratio and cutdown the campaign needs.</p>
+      </li>
+    </ol>
+
+    <ol class="process-steps" data-pipeline-panel="live" hidden>
+      <li class="process-step">
+        <span class="step-num">01</span>
+        <h3 class="step-title">Concept</h3>
+        <p class="step-body">Brief to script to shot list, so what gets shot is what the edit actually needs.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">02</span>
+        <h3 class="step-title">Footage &amp; Assets</h3>
+        <p class="step-body">Rushes, brand assets and stock organised into selects, with coverage and continuity mapped before the cut begins.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">03</span>
+        <h3 class="step-title">Edit &amp; Sound</h3>
+        <p class="step-body">Assembly to fine cut, then graded, scored, and finished with voiceover and sound design.</p>
+      </li>
+      <li class="process-step">
+        <span class="step-num">04</span>
+        <h3 class="step-title">Delivery</h3>
+        <p class="step-body">The same delivery spec — every aspect ratio, cutdown and caption treatment the campaign needs.</p>
       </li>
     </ol>
   </div>

@@ -793,6 +793,23 @@ main {
   transform: translate(-50%, -50%) scale(1.08);
 }
 
+/* Muted preview that starts playing after a moment of hover. */
+.thumb-preview {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  z-index: 1;
+  pointer-events: none; /* clicks still reach the button underneath */
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+
+.thumb-preview.visible {
+  opacity: 1;
+}
+
 /* Shown when a YouTube poster frame can't be fetched. */
 .thumb-fallback {
   position: absolute;
@@ -811,12 +828,53 @@ main {
 
 /* ============================= PROCESS ============================= */
 
+.pipeline-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: 32px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.pipeline-tab {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 9px 20px;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  transition: color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.pipeline-tab:hover {
+  color: var(--text);
+}
+
+.pipeline-tab.active {
+  background: var(--accent);
+  color: #120c02;
+}
+
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   list-style: none;
-  counter-reset: step;
+  animation: fadeUp 0.45s var(--ease) both;
+}
+
+/* Beats the class-level display, which would otherwise out-rank the UA [hidden] rule. */
+.process-steps[hidden] {
+  display: none;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .process-step {

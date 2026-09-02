@@ -153,6 +153,79 @@ document.addEventListener('DOMContentLoaded', () => {
     openLightbox(card.dataset.yt, card.dataset.orientation, card.dataset.title);
   });
 
+  /* ---------- Hover previews ----------
+     The interaction every good reel site has: rest on a card and it starts playing
+     silently. Only one preview exists at a time, and it waits for a beat of hover so
+     sweeping the cursor across a row doesn't spawn players.                      */
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  if (canHover && !reducedMotion) {
+    let hoverTimer = null;
+    let activePreview = null;
+
+    const clearPreview = () => {
+      clearTimeout(hoverTimer);
+      if (activePreview) {
+        activePreview.remove();
+        activePreview = null;
+      }
+    };
+
+    document.addEventListener('mouseover', (event) => {
+      const thumb = event.target.closest('.video-thumb');
+      if (!thumb) return;
+      if (activePreview && activePreview.parentElement === thumb) return;
+
+      clearPreview();
+
+      const card = thumb.closest('.video-card');
+      const videoId = card && card.dataset.yt;
+      if (!videoId) return;
+
+      hoverTimer = setTimeout(() => {
+        const frame = document.createElement('iframe');
+        frame.className = 'thumb-preview';
+        frame.setAttribute('tabindex', '-1');
+        frame.setAttribute('aria-hidden', 'true');
+        frame.allow = 'autoplay; encrypted-media';
+        frame.src = 'https://www.youtube.com/embed/' + encodeURIComponent(videoId) +
+          '?autoplay=1&mute=1&controls=0&loop=1&playlist=' + encodeURIComponent(videoId) +
+          '&modestbranding=1&rel=0&playsinline=1&disablekb=1';
+        thumb.appendChild(frame);
+        activePreview = frame;
+        requestAnimationFrame(() => frame.classList.add('visible'));
+      }, 420);
+    });
+
+    document.addEventListener('mouseout', (event) => {
+      const thumb = event.target.closest('.video-thumb');
+      if (!thumb) return;
+      // Ignore moves between children of the same card.
+      if (event.relatedTarget && thumb.contains(event.relatedTarget)) return;
+      clearPreview();
+    });
+
+    // A preview left running behind the lightbox would keep playing.
+    document.addEventListener('click', clearPreview);
+  }
+
+  /* ---------- Process pipeline switch ---------- */
+  const pipelineTabs = document.querySelectorAll('.pipeline-tab');
+  const pipelinePanels = document.querySelectorAll('[data-pipeline-panel]');
+
+  pipelineTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      pipelineTabs.forEach((other) => {
+        const isActive = other === tab;
+        other.classList.toggle('active', isActive);
+        other.setAttribute('aria-selected', String(isActive));
+      });
+      pipelinePanels.forEach((panel) => {
+        panel.hidden = panel.dataset.pipelinePanel !== tab.dataset.pipeline;
+      });
+    });
+  });
+
   /* ---------- Carousels ----------
      The card set is cloned end to end so scrolling never hits a wall: once the
      viewport drifts a whole set away from the middle copy, scrollLeft jumps back by
