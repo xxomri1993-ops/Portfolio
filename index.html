@@ -37,7 +37,8 @@
 
     <nav class="main-nav" aria-label="Primary">
       <ul class="nav-list">
-        <li><a class="nav-link" data-section="work" href="#work">Work</a></li>
+        <li><a class="nav-link" data-section="tv-commercials" href="#tv-commercials">TV Commercials</a></li>
+        <li><a class="nav-link" data-section="performance-ads" href="#performance-ads">Performance Ads</a></li>
         <li><a class="nav-link" data-section="process" href="#process">Process</a></li>
         <li class="nav-cta-mobile"><a class="nav-cta" href="#contact">Get in touch</a></li>
       </ul>
@@ -102,66 +103,84 @@
 <!-- ===================== WORK ===================== -->
 <!--
   THE VIDEO LIST
-  Each card is one line. Edit these four attributes and nothing else:
+  Each card is one line. Move a card between the two sections by moving its line.
 
     data-yt           YouTube ID (the part after /shorts/ or ?v=)
     data-title        label under the card
     data-result       optional one-line result shown under the title
-    data-tags         comma-separated. Vocabulary: Ads For Social, TV Ads, UGC.
-                      A video can carry several — data-tags="TV Ads, UGC" puts it
-                      under both filters. There is deliberately no "AI" tag: it
-                      applies to everything here, so it would filter nothing.
     data-orientation  omit for 9:16 (Shorts). Otherwise "wide" (16:9),
                       "square" (1:1) or "portrait" (4:5).
 
-  The filter buttons build themselves from whatever tags are in use, in the order
-  listed above, so a tag with no videos never shows an empty filter. Add a video by
-  copying a line; remove one by deleting its line.
+  Cards in a row share a height and take their width from their own ratio, so mixed
+  formats sit together without the row going ragged. A row that overflows loops
+  endlessly; one that fits shows no arrows.
 -->
-<main id="work" data-section="work">
-  <section class="work-section">
+<main id="work">
+
+  <section class="work-section" id="tv-commercials" data-section="tv-commercials">
     <div class="section-inner">
       <header class="section-header">
         <div class="section-heading">
-          <h2 class="section-title">Selected Work</h2>
-          <p class="section-subtitle">Performance ads and commercials, produced end to end with AI. Where a piece ran live, the number is what it returned.</p>
+          <h2 class="section-title">TV Commercials</h2>
+          <p class="section-subtitle">Full AI production pipeline &ndash; from concept to broadcast-ready delivery, without a camera or crew.</p>
         </div>
         <div class="section-tools">
           <span class="section-count"></span>
           <div class="carousel-nav">
-            <button class="carousel-arrow prev" aria-label="Scroll work left">
+            <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
-            <button class="carousel-arrow next" aria-label="Scroll work right">
+            <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </button>
           </div>
         </div>
       </header>
 
-      <div class="filter-bar" id="filterBar" role="group" aria-label="Filter work by category"></div>
-
-      <div class="carousel" id="workCarousel">
+      <div class="carousel">
         <div class="carousel-track">
-          <!-- Ordered strongest first: the TV spots lead, then by proven ROAS. -->
-          <!-- A flagship of each format leads, so the first screen shows a commercial
-               and a live result side by side; everything after is ordered by ROAS. -->
-          <article class="video-card" data-yt="Umf475f98Ns" data-title="TV Commercial &mdash; 01" data-tags="TV Ads" data-orientation="wide"></article>
-          <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Face Cream &mdash; Memorial Day" data-result="~3 ROAS &middot; 2-week flight" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="EDsswArNDEU" data-title="TV Commercial &mdash; 02" data-tags="TV Ads" data-orientation="wide"></article>
-          <article class="video-card" data-yt="yR9HAw4kv8M" data-title="Gravite &mdash; July 4th Sale" data-result="2&ndash;2.5 ROAS &middot; 2-week flight" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="daZ4RIkHWvg" data-title="Particle for Men &mdash; Deodorant" data-result="1.6&ndash;2.4 ROAS &middot; held 1 month+" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="BwNXKIyPnCs" data-title="Ab Firming Cream" data-result="1.7 ROAS &middot; held 1 month+" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="K6O6zPC6_rU" data-title="Face Cream" data-result="1.5&ndash;2 ROAS &middot; held at scale" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="nR0WWfD5hzQ" data-title="Sunscreen" data-result="1.5 ROAS &middot; held 1 month" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="AUdQQy_OMtI" data-title="Face Cream" data-result="1.3 ROAS &middot; held 2 months+" data-tags="Ads For Social"></article>
-          <article class="video-card" data-yt="guh8q_uUDiM" data-title="Particle for Men &mdash; Multi-Product" data-result="Not yet live" data-tags="Ads For Social"></article>
+          <article class="video-card" data-yt="Umf475f98Ns" data-title="TV Commercial &mdash; 01" data-orientation="wide"></article>
+          <article class="video-card" data-yt="EDsswArNDEU" data-title="TV Commercial &mdash; 02" data-orientation="wide"></article>
         </div>
       </div>
-
-      <p class="empty-state" id="emptyState" hidden>Nothing tagged that yet.</p>
     </div>
   </section>
+
+  <section class="work-section" id="performance-ads" data-section="performance-ads">
+    <div class="section-inner">
+      <header class="section-header">
+        <div class="section-heading">
+          <h2 class="section-title">Performance Ads</h2>
+          <p class="section-subtitle">Content built to stop the scroll, speak to pain points, and convert. Where a piece ran live, the number is what it returned.</p>
+        </div>
+        <div class="section-tools">
+          <span class="section-count"></span>
+          <div class="carousel-nav">
+            <button class="carousel-arrow prev" aria-label="Scroll Performance Ads left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="carousel-arrow next" aria-label="Scroll Performance Ads right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="carousel">
+        <div class="carousel-track">
+          <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Face Cream &mdash; Memorial Day" data-result="~3 ROAS &middot; 2-week flight"></article>
+          <article class="video-card" data-yt="yR9HAw4kv8M" data-title="Gravite &mdash; July 4th Sale" data-result="2&ndash;2.5 ROAS &middot; 2-week flight"></article>
+          <article class="video-card" data-yt="daZ4RIkHWvg" data-title="Particle for Men &mdash; Deodorant" data-result="1.6&ndash;2.4 ROAS &middot; held 1 month+"></article>
+          <article class="video-card" data-yt="BwNXKIyPnCs" data-title="Ab Firming Cream" data-result="1.7 ROAS &middot; held 1 month+"></article>
+          <article class="video-card" data-yt="K6O6zPC6_rU" data-title="Face Cream" data-result="1.5&ndash;2 ROAS &middot; held at scale"></article>
+          <article class="video-card" data-yt="nR0WWfD5hzQ" data-title="Sunscreen" data-result="1.5 ROAS &middot; held 1 month"></article>
+          <article class="video-card" data-yt="AUdQQy_OMtI" data-title="Face Cream" data-result="1.3 ROAS &middot; held 2 months+"></article>
+          <article class="video-card" data-yt="guh8q_uUDiM" data-title="Particle for Men &mdash; Multi-Product" data-result="Not yet live"></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- ===================== PROCESS ===================== -->

@@ -221,19 +221,28 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', clearPreview);
   }
 
+  /* ---------- Section counts ---------- */
+  document.querySelectorAll('.work-section').forEach((section) => {
+    const countEl = section.querySelector('.section-count');
+    if (!countEl) return;
+    const total = section.querySelectorAll('.video-card:not([data-clone])').length;
+    countEl.textContent = total + (total === 1 ? ' film' : ' films');
+  });
+
   /* ---------- Carousels ----------
      The card set is cloned end to end so scrolling never hits a wall: once the
      viewport drifts a whole set away from the middle copy, scrollLeft jumps back by
      exactly one set width. The cards under the viewport are identical at that point,
      so the seam is invisible and the row reads as an endless loop.               */
-  const createCarousel = (carousel) => {
+  document.querySelectorAll('.carousel').forEach((carousel) => {
     const track = carousel.querySelector('.carousel-track');
     const scope = carousel.closest('section') || document;
     const prevBtn = scope.querySelector('.carousel-arrow.prev');
     const nextBtn = scope.querySelector('.carousel-arrow.next');
-    if (!track) return null;
+    const carouselNav = scope.querySelector('.carousel-nav');
+    if (!track) return;
 
-    let originals = Array.from(track.children);
+    const originals = Array.from(track.children);
     let setWidth = 0;   // width of one full set of cards
     let wrapUnit = 0;   // whole number of sets, at least a viewport wide
     let wrapping = false;
@@ -263,6 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       track.querySelectorAll('[data-clone]').forEach((clone) => clone.remove());
       setWidth = measured;
+
+      // A row that already fits has nothing to scroll to: no clones, no controls.
+      if (setWidth <= track.clientWidth) {
+        wrapUnit = 0;
+        if (carouselNav) carouselNav.hidden = true;
+        return;
+      }
+      if (carouselNav) carouselNav.hidden = false;
 
       wrapUnit = setWidth * Math.ceil(track.clientWidth / setWidth);
       const needed = Math.ceil((wrapUnit * 3 + track.clientWidth) / setWidth);
@@ -313,84 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('load', build);
     build();
-
-    return {
-      setCards(cards) {
-        originals = cards;
-        setWidth = 0;
-        wrapUnit = 0;
-        track.replaceChildren(...cards);
-        cards.forEach((card) => card.classList.add('in-view'));
-        build();
-      },
-    };
-  };
-
-  /* ---------- Filters ----------
-     Chips are derived from the tags actually in use, so a category with no videos
-     never shows up as a dead filter.                                             */
-  const TAG_ORDER = ['Ads For Social', 'TV Ads', 'UGC'];
-
-  const carouselEl = document.getElementById('workCarousel');
-  const filterBar = document.getElementById('filterBar');
-  const emptyState = document.getElementById('emptyState');
-  const countEl = document.querySelector('.section-count');
-  const carousel = carouselEl ? createCarousel(carouselEl) : null;
-
-  if (carousel && filterBar) {
-    const allCards = Array.from(carouselEl.querySelectorAll('.video-card:not([data-clone])'));
-
-    const tagsOf = (card) =>
-      (card.dataset.tags || '')
-        .split(',')
-        .map((tag) => tag.trim())
-        .filter(Boolean);
-
-    const used = new Set();
-    allCards.forEach((card) => tagsOf(card).forEach((tag) => used.add(tag)));
-
-    const ordered = [
-      ...TAG_ORDER.filter((tag) => used.has(tag)),
-      ...[...used].filter((tag) => !TAG_ORDER.includes(tag)).sort(),
-    ];
-
-    const applyFilter = (tag, chip) => {
-      filterBar.querySelectorAll('.filter-chip').forEach((el) => {
-        const isActive = el === chip;
-        el.classList.toggle('active', isActive);
-        el.setAttribute('aria-pressed', String(isActive));
-      });
-
-      const matching = tag === null ? allCards : allCards.filter((card) => tagsOf(card).includes(tag));
-
-      if (countEl) {
-        countEl.textContent = matching.length + (matching.length === 1 ? ' film' : ' films');
-      }
-      if (emptyState) emptyState.hidden = matching.length > 0;
-      carouselEl.hidden = matching.length === 0;
-
-      carousel.setCards(matching);
-    };
-
-    const addChip = (label, tag, count) => {
-      const chip = document.createElement('button');
-      chip.className = 'filter-chip';
-      chip.type = 'button';
-      chip.setAttribute('aria-pressed', 'false');
-      chip.innerHTML = label + ' <span class="chip-count">' + count + '</span>';
-      chip.addEventListener('click', () => applyFilter(tag, chip));
-      filterBar.appendChild(chip);
-      return chip;
-    };
-
-    const allChip = addChip('All', null, allCards.length);
-    ordered.forEach((tag) => {
-      const count = allCards.filter((card) => tagsOf(card).includes(tag)).length;
-      addChip(tag, tag, count);
-    });
-
-    applyFilter(null, allChip);
-  }
+  });
 
   /* ---------- Scroll-spy nav ---------- */
   const navLinks = document.querySelectorAll('.nav-link');
