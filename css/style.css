@@ -817,64 +817,37 @@ main {
   background: linear-gradient(160deg, rgba(109, 79, 224, 0.3), rgba(20, 16, 31, 0.9) 55%, rgba(240, 178, 94, 0.16));
 }
 
-.video-label {
+.video-meta {
   margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.video-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-transform: uppercase;
+}
+
+/* The performance line — the reason a client keeps reading. */
+.video-result {
   font-size: 12px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--text-faint);
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ============================= PROCESS ============================= */
-
-.pipeline-switch {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  margin-bottom: 32px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-}
-
-.pipeline-tab {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 9px 20px;
-  border: none;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-dim);
-  transition: color 0.3s var(--ease), background 0.3s var(--ease);
-}
-
-.pipeline-tab:hover {
-  color: var(--text);
-}
-
-.pipeline-tab.active {
-  background: var(--accent);
-  color: #120c02;
-}
 
 .process-steps {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   list-style: none;
-  animation: fadeUp 0.45s var(--ease) both;
-}
-
-/* Beats the class-level display, which would otherwise out-rank the UA [hidden] rule. */
-.process-steps[hidden] {
-  display: none;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 .process-step {

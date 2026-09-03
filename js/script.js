@@ -134,12 +134,24 @@ document.addEventListener('DOMContentLoaded', () => {
       '<path d="M12 6.63397C12.6667 7.01887 12.6667 7.98113 12 8.36603L2.25 13.9952C1.58333 14.3801 0.75 13.899 0.75 13.1292L0.75 1.87083C0.75 1.10103 1.58333 0.619903 2.25 1.0048L12 6.63397Z" fill="currentColor"/></svg>';
     button.appendChild(badge);
 
+    const meta = document.createElement('div');
+    meta.className = 'video-meta';
+
     const label = document.createElement('p');
     label.className = 'video-label';
     label.textContent = title;
+    meta.appendChild(label);
+
+    // The result line is the thing a prospective client is actually reading.
+    if (card.dataset.result) {
+      const result = document.createElement('p');
+      result.className = 'video-result';
+      result.textContent = card.dataset.result;
+      meta.appendChild(result);
+    }
 
     card.appendChild(button);
-    card.appendChild(label);
+    card.appendChild(meta);
   };
 
   document.querySelectorAll('.video-card').forEach(buildCard);
@@ -208,23 +220,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // A preview left running behind the lightbox would keep playing.
     document.addEventListener('click', clearPreview);
   }
-
-  /* ---------- Process pipeline switch ---------- */
-  const pipelineTabs = document.querySelectorAll('.pipeline-tab');
-  const pipelinePanels = document.querySelectorAll('[data-pipeline-panel]');
-
-  pipelineTabs.forEach((tab) => {
-    tab.addEventListener('click', () => {
-      pipelineTabs.forEach((other) => {
-        const isActive = other === tab;
-        other.classList.toggle('active', isActive);
-        other.setAttribute('aria-selected', String(isActive));
-      });
-      pipelinePanels.forEach((panel) => {
-        panel.hidden = panel.dataset.pipelinePanel !== tab.dataset.pipeline;
-      });
-    });
-  });
 
   /* ---------- Carousels ----------
      The card set is cloned end to end so scrolling never hits a wall: once the
@@ -334,7 +329,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Filters ----------
      Chips are derived from the tags actually in use, so a category with no videos
      never shows up as a dead filter.                                             */
-  const TAG_ORDER = ['AI', 'UGC', 'Ads For Social', 'TV Ads', 'Live Action'];
+  const TAG_ORDER = ['Ads For Social', 'TV Ads', 'UGC'];
 
   const carouselEl = document.getElementById('workCarousel');
   const filterBar = document.getElementById('filterBar');
