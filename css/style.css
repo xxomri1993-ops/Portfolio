@@ -433,19 +433,19 @@ img {
   color: var(--text);
 }
 
-.btn--ghost svg {
-  transform: rotate(180deg);
-  transition: transform 0.35s var(--ease);
-}
-
 .btn--ghost:hover {
   border-color: var(--border-hover);
   background: var(--accent-soft);
   transform: translateY(-2px);
 }
 
-.btn--ghost:hover svg {
-  transform: rotate(180deg) translateY(3px);
+/* The arrow points the way the button takes you — down the page. */
+.btn svg {
+  transition: transform 0.35s var(--ease);
+}
+
+.btn:hover svg {
+  transform: translateY(3px);
 }
 
 @keyframes rise {
