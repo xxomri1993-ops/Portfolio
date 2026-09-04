@@ -185,6 +185,11 @@ img {
   font-weight: 300;
 }
 
+.proof-note strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* ============================= HEADER ============================= */
 
 .site-header {
