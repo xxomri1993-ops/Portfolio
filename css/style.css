@@ -136,56 +136,50 @@ img {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
-/* ============================= PROOF BAND =============================
-   The one place the page raises its voice. Everything else stays quiet. */
+/* ============================= STATEMENT =============================
+   The page's loud moment. It is language rather than statistics, because the
+   numbers worth quoting here belong to the client. */
 
-.proof {
-  padding: 72px var(--shell) 64px;
+.statement {
+  padding: 84px var(--shell) 76px;
   border-top: 1px solid var(--border);
 }
 
-.proof-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px 72px;
-  list-style: none;
-  max-width: 1400px;
-  margin: 0 auto 26px;
-}
-
-.proof-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.proof-figure {
-  font-family: var(--font-display);
-  font-size: clamp(3.4rem, 9vw, 7rem);
-  font-weight: 800;
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-}
-
-.proof-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-
-.proof-note {
+/* Shares the page's 1400px column so its left edge lines up with every heading. */
+.statement-inner {
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.statement-text {
+  max-width: 1100px;
+  margin: 0 0 22px;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 4.6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+.statement-text em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  font-size: 1.1em;
+}
+
+.statement-note {
+  max-width: 1100px;
+  margin: 0;
   font-size: 0.95rem;
   color: var(--text-dim);
   font-weight: 300;
+  line-height: 1.6;
 }
 
-.proof-note strong {
+.statement-note strong {
   color: var(--text);
   font-weight: 600;
 }

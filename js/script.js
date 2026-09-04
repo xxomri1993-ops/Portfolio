@@ -537,37 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  /* ---------- Proof figures ---------- */
-  const figures = document.querySelectorAll('.proof-figure');
-  if (figures.length && 'IntersectionObserver' in window && !reducedMotion) {
-    const countUp = (el) => {
-      const target = parseFloat(el.dataset.countTo);
-      if (!Number.isFinite(target)) return;
-      const prefix = el.dataset.prefix || '';
-      const suffix = el.dataset.suffix || '';
-      const started = performance.now();
-      const duration = 900;
-
-      const tick = (now) => {
-        const progress = Math.min((now - started) / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        el.textContent = prefix + Math.round(target * eased) + suffix;
-        if (progress < 1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    };
-
-    const proofObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        countUp(entry.target);
-        proofObserver.unobserve(entry.target);
-      });
-    }, { threshold: 0.6 });
-
-    figures.forEach((figure) => proofObserver.observe(figure));
-  }
-
   /* ---------- Hero parallax ---------- */
   const heroContent = document.querySelector('.hero-content');
   const heroVideo = document.querySelector('.hero-bg-video');

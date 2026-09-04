@@ -72,17 +72,19 @@ If you swap in a **vertical** video, add `bg-yt--vertical` to the class:
 
 ---
 
-## The three big numbers
+## The statement between the hero and the work
 
 ```html
-<span class="proof-figure" data-count-to="10">10</span>
-<span class="proof-label">Videos delivered</span>
+<p class="statement-text">I make ads that look like <em>films</em> and perform like ads.</p>
+<p class="statement-note">In-house at <strong>Particle For Men</strong> — ...</p>
 ```
 
-Change the number in **both** places — between the tags, and in `data-count-to`.
-They have to match, or the number will jump when it counts up.
+Rewrite either line freely. Whatever sits inside `<em>` is set in the amber serif
+italic, so put the word you want emphasised there — one word works better than
+several. `<strong>` makes text bold and bright.
 
----
+Keep it short. This line is set very large, and a long sentence at that size runs
+across the screen and loses its punch.
 
 ## Special characters
 
@@ -128,7 +130,7 @@ me and I'll put it back in a minute.
 | Your name, top left | `class="logo"` |
 | Menu labels | `class="nav-link"` |
 | Big opening headline + tagline | `class="hero-name"` |
-| The three big numbers | `class="proof-figure"` |
+| The big statement line | `class="statement-text"` |
 | Tool list | `class="tools-list"` |
 | Section headings | `class="section-title"` |
 | The videos | `class="video-card"` |
