@@ -64,7 +64,11 @@ Each section is one or the other, set by a single class in `index.html`:
 <div class="carousel">                  <!-- row: scrolls sideways, loops forever -->
 ```
 
-Add or delete `carousel--grid` to switch. The grid is 4 across on a computer,
+Add or delete `carousel--grid` to switch. Adding `carousel--no-labels` alongside it
+hides the caption under each card, for when the thumbnails speak for themselves —
+the title is still read out to screen readers and still appears when the video opens.
+
+The grid is 4 across on a computer,
 3 on a tablet, 2 on a phone, and the scroll arrows hide themselves since there
 is nothing to scroll. Cards in a grid are noticeably larger.
 

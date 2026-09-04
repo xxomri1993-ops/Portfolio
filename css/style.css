@@ -701,6 +701,13 @@ main {
   flex: initial;
 }
 
+/* Hides the captions where the artwork already says what the video is. The title
+   still reaches screen readers through the button label, and still shows in the
+   player when the video opens. */
+.carousel--no-labels .video-meta {
+  display: none;
+}
+
 .carousel--grid .video-thumb {
   height: auto;
   width: 100%;
