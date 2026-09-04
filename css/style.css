@@ -698,6 +698,7 @@ main {
 .video-card {
   flex: 0 0 auto;
   scroll-snap-align: start;
+  perspective: 900px;
   opacity: 0;
   transform: translateY(28px);
   transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
@@ -723,6 +724,12 @@ main {
   overflow: hidden;
   transition: border-color 0.4s var(--ease), transform 0.45s var(--ease),
     box-shadow 0.45s var(--ease);
+  will-change: transform;
+}
+
+/* While the cursor is over a card, JS drives the transform frame by frame. */
+.video-thumb.tilting {
+  transition: border-color 0.4s var(--ease), box-shadow 0.45s var(--ease);
 }
 
 .video-card[data-orientation="wide"] .video-thumb {
@@ -757,7 +764,9 @@ main {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(6, 5, 12, 0) 45%, rgba(6, 5, 12, 0.6) 100%);
+  background:
+    radial-gradient(38% 38% at var(--mx, 50%) var(--my, 50%), rgba(255, 236, 205, 0.16), transparent 70%),
+    linear-gradient(180deg, rgba(6, 5, 12, 0) 45%, rgba(6, 5, 12, 0.6) 100%);
   opacity: 0;
   transition: opacity 0.4s var(--ease);
 }

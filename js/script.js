@@ -242,6 +242,42 @@ document.addEventListener('DOMContentLoaded', () => {
     countEl.textContent = total + (total === 1 ? ' film' : ' films');
   });
 
+  /* ---------- Card tilt ----------
+     Cards lean toward the cursor and a soft highlight tracks across them, so the
+     row reads as physical objects catching light rather than flat rectangles.  */
+  if (canHover && !reducedMotion) {
+    const MAX_TILT = 7; // degrees — past about 8 it stops looking like a lens
+
+    document.addEventListener('mousemove', (event) => {
+      const thumb = event.target.closest('.video-thumb');
+      if (!thumb) return;
+
+      const box = thumb.getBoundingClientRect();
+      const px = (event.clientX - box.left) / box.width;
+      const py = (event.clientY - box.top) / box.height;
+
+      thumb.classList.add('tilting');
+      thumb.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      thumb.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+      thumb.style.transform =
+        'perspective(900px) rotateX(' + ((0.5 - py) * MAX_TILT).toFixed(2) + 'deg)' +
+        ' rotateY(' + ((px - 0.5) * MAX_TILT).toFixed(2) + 'deg)' +
+        ' translateY(-10px) scale(1.04)';
+      // Shadow falls opposite the lean.
+      thumb.style.boxShadow =
+        (0.5 - px) * 26 + 'px ' + ((py - 0.5) * 14 + 26) + 'px 60px rgba(0, 0, 0, 0.6)';
+    }, { passive: true });
+
+    document.addEventListener('mouseout', (event) => {
+      const thumb = event.target.closest('.video-thumb');
+      if (!thumb) return;
+      if (event.relatedTarget && thumb.contains(event.relatedTarget)) return;
+      thumb.classList.remove('tilting');
+      thumb.style.transform = '';
+      thumb.style.boxShadow = '';
+    }, { passive: true });
+  }
+
   /* ---------- Carousels ----------
      The card set is cloned end to end so scrolling never hits a wall: once the
      viewport drifts a whole set away from the middle copy, scrollLeft jumps back by
