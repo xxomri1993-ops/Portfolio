@@ -239,7 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countEl = section.querySelector('.section-count');
     if (!countEl) return;
     const total = section.querySelectorAll('.video-card:not([data-clone])').length;
-    countEl.textContent = total + (total === 1 ? ' film' : ' films');
+    countEl.textContent = total + (total === 1 ? ' video' : ' videos');
   });
 
   /* ---------- Card tilt ----------
