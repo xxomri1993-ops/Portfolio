@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
      Each card ships as one line of HTML carrying a YouTube ID. Only the poster frame
      is fetched up front; the player iframe is created on click, so the page never
      boots a dozen YouTube players at once.                                        */
-  const THUMB_SIZES = ['oardefault', 'maxresdefault', 'hqdefault'];
+  const THUMB_SIZES = ['oardefault', 'oar2', 'maxresdefault', 'sddefault', 'hqdefault'];
 
   const buildCard = (card) => {
     const videoId = card.dataset.yt;
@@ -234,6 +234,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', clearPreview);
   }
 
+  // A grid shows everything at once, so its scroll controls are meaningless.
+  document.querySelectorAll('.carousel--grid').forEach((grid) => {
+    const section = grid.closest('section');
+    const nav = section && section.querySelector('.carousel-nav');
+    if (nav) nav.hidden = true;
+  });
+
   /* ---------- Section counts ---------- */
   document.querySelectorAll('.work-section').forEach((section) => {
     const countEl = section.querySelector('.section-count');
@@ -283,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
      viewport drifts a whole set away from the middle copy, scrollLeft jumps back by
      exactly one set width. The cards under the viewport are identical at that point,
      so the seam is invisible and the row reads as an endless loop.               */
-  document.querySelectorAll('.carousel').forEach((carousel) => {
+  document.querySelectorAll('.carousel:not(.carousel--grid)').forEach((carousel) => {
     const track = carousel.querySelector('.carousel-track');
     const scope = carousel.closest('section') || document;
     const prevBtn = scope.querySelector('.carousel-arrow.prev');

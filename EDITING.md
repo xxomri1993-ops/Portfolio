@@ -55,6 +55,24 @@ neither will videos with embedding turned off in YouTube Studio.
 
 ---
 
+## Grid or scrolling row
+
+Each section is one or the other, set by a single class in `index.html`:
+
+```html
+<div class="carousel carousel--grid">   <!-- grid: everything visible at once -->
+<div class="carousel">                  <!-- row: scrolls sideways, loops forever -->
+```
+
+Add or delete `carousel--grid` to switch. The grid is 4 across on a computer,
+3 on a tablet, 2 on a phone, and the scroll arrows hide themselves since there
+is nothing to scroll. Cards in a grid are noticeably larger.
+
+A grid suits a section where you want every video seen. A row suits a long list
+you would rather not have take over the page.
+
+---
+
 ## The video playing behind your name
 
 In the hero section, near the top:
@@ -134,6 +152,7 @@ me and I'll put it back in a minute.
 | Tool list | `class="tools-list"` |
 | Section headings | `class="section-title"` |
 | The videos | `class="video-card"` |
+| Grid vs scrolling row | `class="carousel"` |
 | The four process steps | `class="process-step"` |
 | Email, phone, WhatsApp | `class="contact-link"` |
 | Browser tab title / link preview | the top of the file |
