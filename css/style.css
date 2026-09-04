@@ -704,6 +704,24 @@ main {
 .carousel--grid .video-thumb {
   height: auto;
   width: 100%;
+  max-width: 268px;
+}
+
+.section-aside {
+  margin-top: 44px;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.6rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-dim);
+}
+
+.section-aside em {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.15em;
+  color: var(--accent);
 }
 
 /* ============================= VIDEO CARDS ============================= */
