@@ -142,11 +142,24 @@ document.addEventListener('DOMContentLoaded', () => {
     label.textContent = title;
     meta.appendChild(label);
 
-    // The result line is the thing a prospective client is actually reading.
+    // The result is the thing a prospective client is actually reading, so the
+    // figure is set large and whatever follows the separator becomes its caption.
     if (card.dataset.result) {
+      const [metric, ...rest] = card.dataset.result.split('\u00b7');
       const result = document.createElement('p');
       result.className = 'video-result';
-      result.textContent = card.dataset.result;
+
+      const metricEl = document.createElement('span');
+      metricEl.className = 'video-metric';
+      metricEl.textContent = metric.trim();
+      result.appendChild(metricEl);
+
+      if (rest.length) {
+        const contextEl = document.createElement('span');
+        contextEl.className = 'video-context';
+        contextEl.textContent = rest.join('\u00b7').trim();
+        result.appendChild(contextEl);
+      }
       meta.appendChild(result);
     }
 
@@ -367,6 +380,13 @@ document.addEventListener('DOMContentLoaded', () => {
       )
     : null;
 
+  document.querySelectorAll('.carousel-track').forEach((track) => {
+    Array.from(track.children).forEach((card, index) => {
+      // Cards arrive in sequence rather than all at once.
+      card.style.setProperty('--i', Math.min(index, 6));
+    });
+  });
+
   document.querySelectorAll('.video-card').forEach((card) => {
     if (io) {
       io.observe(card);
@@ -479,6 +499,57 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       start();
     }
+  }
+
+  /* ---------- Proof figures ---------- */
+  const figures = document.querySelectorAll('.proof-figure');
+  if (figures.length && 'IntersectionObserver' in window && !reducedMotion) {
+    const countUp = (el) => {
+      const target = parseFloat(el.dataset.countTo);
+      if (!Number.isFinite(target)) return;
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const started = performance.now();
+      const duration = 900;
+
+      const tick = (now) => {
+        const progress = Math.min((now - started) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = prefix + Math.round(target * eased) + suffix;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+
+    const proofObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        countUp(entry.target);
+        proofObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.6 });
+
+    figures.forEach((figure) => proofObserver.observe(figure));
+  }
+
+  /* ---------- Hero parallax ---------- */
+  const heroContent = document.querySelector('.hero-content');
+  const heroVideo = document.querySelector('.hero-bg-video');
+  if (heroContent && !reducedMotion) {
+    let ticking = false;
+    const parallax = () => {
+      const y = window.scrollY;
+      if (y > window.innerHeight) return;
+      heroContent.style.transform = 'translateY(' + y * 0.18 + 'px)';
+      heroContent.style.opacity = String(Math.max(1 - y / (window.innerHeight * 0.8), 0));
+      if (heroVideo) heroVideo.style.transform = 'translateY(' + y * 0.08 + 'px)';
+    };
+    window.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { parallax(); ticking = false; });
+    }, { passive: true });
+    parallax();
   }
 
   /* ---------- Footer year ---------- */
