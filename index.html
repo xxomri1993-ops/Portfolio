@@ -3,10 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- EDIT: browser tab title -->
 <title>Omri Tabachnik — AI Video Editor & Content Producer</title>
 <meta name="description" content="Omri Tabachnik — AI Video Editor & Content Producer. Broadcast-quality video production powered by a full AI pipeline, without a crew, a camera, or a lengthy production cycle.">
 
-<!-- Link previews (WhatsApp, LinkedIn, X). Swap og:image for a still from your reel. -->
+<!-- EDIT: how the link looks when shared on WhatsApp / LinkedIn.
+     og:image must be a full https:// address to a picture. -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Omri Tabachnik — AI Video Editor & Content Producer">
 <meta property="og:description" content="Broadcast-quality video production powered by a full AI pipeline — without a crew, a camera, or a lengthy production cycle.">
@@ -33,8 +35,10 @@
 <!-- ===================== NAV ===================== -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
+    <!-- EDIT: name in the top-left -->
     <a href="#hero" class="logo">Omri Tabachnik</a>
 
+    <!-- EDIT: menu labels. The href and data-section must keep matching a section id below. -->
     <nav class="main-nav" aria-label="Primary">
       <ul class="nav-list">
         <li><a class="nav-link" data-section="tv-commercials" href="#tv-commercials">TV Commercials</a></li>
@@ -55,12 +59,9 @@
 <!-- ===================== HERO ===================== -->
 <section class="hero" id="hero">
   <div class="hero-bg-video" aria-hidden="true">
-    <!--
-      YOUTUBE BACKGROUND VIDEO — swap VIDEO_ID below (it appears twice: in the path
-      and in the playlist param, which is what makes it loop). Keep the other params.
-      The class `bg-yt--vertical` sizes it for a 9:16 (Shorts) source; remove that
-      class if you swap in a normal 16:9 landscape reel.
-    -->
+    <!-- EDIT: the video playing behind your name. Swap the ID below in BOTH places
+         (after "embed/" and after "playlist="). See EDITING.md for the vertical
+         variant if you use a Shorts clip. -->
     <iframe class="bg-yt"
       src="https://www.youtube.com/embed/Umf475f98Ns?autoplay=1&mute=1&loop=1&playlist=Umf475f98Ns&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&disablekb=1"
       title="Background reel" frameborder="0" allow="autoplay; encrypted-media" tabindex="-1"></iframe>
@@ -68,6 +69,7 @@
   <div class="hero-scrim" aria-hidden="true"></div>
 
   <div class="hero-content">
+    <!-- EDIT: the four lines of the opening screen -->
     <p class="hero-eyebrow">Portfolio</p>
     <h1 class="hero-name">Omri Tabachnik</h1>
     <p class="hero-title">AI Video Editor &amp; <em>Content Producer</em></p>
@@ -75,6 +77,7 @@
 
     <div class="hero-actions">
       <a href="#work" class="btn btn--primary">
+        <!-- EDIT: button label -->
         <span>View Work</span>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -83,26 +86,32 @@
 </section>
 
 <!-- ===================== PROOF ===================== -->
-<!-- Figures are drawn from the campaigns listed below; update them when the work does. -->
+<!-- EDIT: the three big numbers.
+     A figure can be a word ("Hundreds") or a number. If it is a number, change it in
+     BOTH places - between the tags and in data-count-to - so it counts up to the
+     right value. A worded figure needs no data-count-to. -->
 <section class="proof" aria-label="At a glance">
   <ul class="proof-list">
     <li class="proof-stat">
+      <span class="proof-figure">Hundreds</span>
+      <span class="proof-label">Videos delivered</span>
+    </li>
+    <li class="proof-stat">
       <span class="proof-figure" data-count-to="10">10</span>
-      <span class="proof-label">Films delivered</span>
+      <span class="proof-label">Featured here</span>
     </li>
     <li class="proof-stat">
-      <span class="proof-figure" data-count-to="0">0</span>
-      <span class="proof-label">Shoot days</span>
-    </li>
-    <li class="proof-stat">
-      <span class="proof-figure" data-count-to="100" data-suffix="%">100%</span>
-      <span class="proof-label">AI-produced</span>
+      <span class="proof-figure" data-count-to="2">2</span>
+      <span class="proof-label">Pipelines: AI and live action</span>
     </li>
   </ul>
-  <p class="proof-note">Broadcast and paid social, produced in-house for <strong>Particle For Men</strong>.</p>
+  <!-- EDIT: the line under the numbers -->
+  <p class="proof-note">A selection of in-house work for <strong>Particle For Men</strong> &mdash; broadcast and paid social, produced with AI, live action, or a mix of the two.</p>
 </section>
 
 <!-- ===================== TOOLS STRIP ===================== -->
+<!-- EDIT: your tools. Add or remove <li>Name</li> items.
+     Keep BOTH lists identical — the second is the copy that makes the scroll seamless. -->
 <section class="tools" aria-label="Production stack">
   <p class="tools-label">Production stack</p>
   <div class="tools-marquee">
@@ -135,6 +144,7 @@
     <div class="section-inner">
       <header class="section-header">
         <div class="section-heading">
+          <!-- EDIT: section heading and intro -->
           <h2 class="section-title">TV Commercials</h2>
           <p class="section-subtitle">Full AI production pipeline &ndash; from concept to broadcast-ready delivery, without a camera or crew.</p>
         </div>
@@ -164,6 +174,7 @@
     <div class="section-inner">
       <header class="section-header">
         <div class="section-heading">
+          <!-- EDIT: section heading and intro -->
           <h2 class="section-title">Performance Ads</h2>
           <p class="section-subtitle">Content built to stop the scroll, speak to pain points, and convert.</p>
         </div>
@@ -202,11 +213,14 @@
   <div class="section-inner">
     <header class="section-header">
       <div class="section-heading">
+        <!-- EDIT: heading and intro for the process section -->
         <h2 class="section-title">How it gets made</h2>
         <p class="section-subtitle">One operator, one pipeline, four stages — from a brief to a file that's ready to run.</p>
       </div>
     </header>
 
+    <!-- EDIT: the four stages. Change the number, title and text of each.
+         Adding a fifth will make them narrow — four fits the row best. -->
     <ol class="process-steps">
       <li class="process-step">
         <span class="step-num">01</span>
@@ -235,10 +249,14 @@
 <!-- ===================== CONTACT ===================== -->
 <footer class="contact" id="contact">
   <div class="contact-inner">
+    <!-- EDIT: closing headline. The word inside <em> is the one set in the serif italic. -->
     <p class="contact-eyebrow">Get in touch</p>
     <h2 class="contact-heading">Let's create <em>something</em>.</h2>
     <p class="contact-body">Available for commercials and performance campaigns.</p>
 
+    <!-- EDIT: your contact details.
+         Change them in BOTH places on each line: the href (what it does when clicked)
+         and the visible text. Phone/WhatsApp use the international form, no + or 0. -->
     <div class="contact-details">
       <a href="mailto:xxomri1993@gmail.com" class="contact-link">
         <span class="contact-label">Email</span>
@@ -263,6 +281,7 @@
       </div>
     -->
 
+    <!-- EDIT: footer line. The year fills in by itself. -->
     <p class="footer-note">&copy; <span id="year"></span> Omri Tabachnik. All rights reserved.</p>
   </div>
 </footer>
