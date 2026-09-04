@@ -90,8 +90,6 @@ document.addEventListener('DOMContentLoaded', () => {
      Each card ships as one line of HTML carrying a YouTube ID. Only the poster frame
      is fetched up front; the player iframe is created on click, so the page never
      boots a dozen YouTube players at once.                                        */
-  const THUMB_SIZES = ['oardefault', 'oar2', 'maxresdefault', 'sddefault', 'hqdefault'];
-
   const buildCard = (card) => {
     const videoId = card.dataset.yt;
     const title = card.dataset.title || 'Untitled';
@@ -105,25 +103,39 @@ document.addEventListener('DOMContentLoaded', () => {
     button.appendChild(fallback);
 
     if (videoId) {
+      const base = 'https://i.ytimg.com/vi/' + videoId + '/';
       const img = document.createElement('img');
       img.alt = '';
       img.loading = 'lazy';
-      let sizeIndex = 0;
-      const tryNextThumb = () => {
-        if (sizeIndex >= THUMB_SIZES.length) {
-          img.remove(); // leave the styled fallback showing
-          return;
-        }
-        img.src = 'https://i.ytimg.com/vi/' + videoId + '/' + THUMB_SIZES[sizeIndex] + '.jpg';
-        sizeIndex += 1;
+      img.decoding = 'async';
+      // Some networks refuse hotlinked images based on the referrer.
+      img.referrerPolicy = 'no-referrer';
+
+      // hqdefault exists for every video on YouTube, so start there: a poster
+      // appears even if nothing better is available.
+      img.addEventListener('load', () => img.classList.add('loaded'));
+      img.src = base + 'hqdefault.jpg';
+
+      // Then try for a sharper or correctly shaped poster, swapping in only the
+      // first one that genuinely loads. Missing sizes answer with a 120x90 grey
+      // stand-in rather than a 404, so size is what tells them apart.
+      const upgrade = (names) => {
+        if (!names.length) return;
+        const probe = new Image();
+        probe.referrerPolicy = 'no-referrer';
+        probe.addEventListener('load', () => {
+          if (probe.naturalWidth > 320) {
+            img.src = probe.src;
+            img.classList.add('loaded');
+          } else {
+            upgrade(names.slice(1));
+          }
+        });
+        probe.addEventListener('error', () => upgrade(names.slice(1)));
+        probe.src = base + names[0];
       };
-      // YouTube answers a missing size with a 120x90 grey placeholder.
-      img.addEventListener('load', () => {
-        if (img.naturalWidth <= 120) tryNextThumb();
-        else img.classList.add('loaded');
-      });
-      img.addEventListener('error', tryNextThumb);
-      tryNextThumb();
+      upgrade(['oardefault.jpg', 'maxresdefault.jpg']);
+
       button.appendChild(img);
     }
 
