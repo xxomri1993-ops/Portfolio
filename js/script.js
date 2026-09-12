@@ -210,6 +210,17 @@ document.addEventListener('DOMContentLoaded', () => {
     scoreEl.innerHTML = 'You got <em>' + correct + ' of ' + answered + '</em>' + tail;
   };
 
+  // Cards left out of the game keep the space the buttons would have taken, so a
+  // row of nine does not look like one of them failed to render.
+  document
+    .querySelectorAll('.carousel--grid .video-card:not([data-answer]):not([data-clone])')
+    .forEach((card) => {
+      const spacer = document.createElement('span');
+      spacer.className = 'guess-placeholder';
+      spacer.setAttribute('aria-hidden', 'true');
+      card.appendChild(spacer);
+    });
+
   quizCards.forEach((card) => {
     const answer = card.dataset.answer;
     if (!OPTIONS.some((option) => option.value === answer)) return;

@@ -795,6 +795,15 @@ main {
   max-width: 268px;
 }
 
+/* A card with no question sits in a grid of cards that have one, and the empty
+   space where its buttons would be reads as a fault rather than as a choice.
+   This holds the row's height so the grid stays even either way. */
+.video-card:not([data-answer]) .guess-placeholder {
+  display: block;
+  height: 30px;
+  margin-top: 10px;
+}
+
 /* A landscape card is twice as wide as the verticals; letting its buttons
    stretch to match made them look like a form rather than a quick call. */
 .video-card[data-orientation="wide"] .guess {

@@ -71,8 +71,9 @@ Three buttons appear under the card, and the line below the grid keeps score.
 - `data-reveal` is the payoff. Keep it to one short sentence; it's the most
   interesting part, because it tells the visitor what they should have spotted.
 - **To leave a video out of the game**, delete both attributes. The card still
-  shows and still plays — it just has no question. That's the right call for
-  anything the three answers don't really fit, like a motion-graphics piece.
+  shows and still plays, and it keeps the space the buttons would have taken so
+  the row stays even. Use this sparingly: in a grid where most cards have a
+  question, one that doesn't reads as a bug rather than as a decision.
 - The score counts only the cards that have a `data-answer`, so you never have to
   keep a total up to date anywhere.
 
