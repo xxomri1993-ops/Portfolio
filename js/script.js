@@ -181,6 +181,84 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelectorAll('.video-card').forEach(buildCard);
 
+  /* ---------- Guess the method ----------
+     A card carrying data-answer gets three buttons under it. Answering is
+     optional, never gates the video, and the verdict lands on the click rather
+     than at the end of the grid, so every guess has its own payoff.          */
+  const OPTIONS = [
+    { value: 'ai', label: 'AI' },
+    { value: 'real', label: 'Real' },
+    { value: 'mix', label: 'Mix' },
+  ];
+
+  const quizCards = Array.from(
+    document.querySelectorAll('.video-card[data-answer]:not([data-clone])')
+  );
+  const scoreEl = document.getElementById('quizScore');
+  let answered = 0;
+  let correct = 0;
+
+  const updateScore = () => {
+    if (!scoreEl) return;
+    if (!answered) {
+      scoreEl.innerHTML = scoreEl.dataset.prompt || '';
+      return;
+    }
+    const tail = answered === quizCards.length
+      ? ' right, out of ' + quizCards.length + '.'
+      : ' right, so far.';
+    scoreEl.innerHTML = 'You got <em>' + correct + ' of ' + answered + '</em>' + tail;
+  };
+
+  quizCards.forEach((card) => {
+    const answer = card.dataset.answer;
+    if (!OPTIONS.some((option) => option.value === answer)) return;
+
+    const row = document.createElement('div');
+    row.className = 'guess';
+    row.setAttribute('role', 'group');
+    row.setAttribute('aria-label', 'Was ' + (card.dataset.title || 'this') + ' generated, filmed, or both?');
+
+    const reveal = document.createElement('p');
+    reveal.className = 'guess-reveal';
+    reveal.setAttribute('aria-live', 'polite');
+    reveal.hidden = true;
+
+    OPTIONS.forEach((option) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'guess-btn';
+      btn.textContent = option.label;
+      btn.dataset.value = option.value;
+
+      btn.addEventListener('click', () => {
+        if (row.classList.contains('answered')) return;
+        row.classList.add('answered');
+
+        const right = option.value === answer;
+        btn.classList.add('is-picked');
+        row.querySelectorAll('.guess-btn').forEach((other) => {
+          if (other.dataset.value === answer) other.classList.add('is-answer');
+        });
+
+        answered += 1;
+        if (right) correct += 1;
+
+        const verdict = right ? 'Correct. ' : 'Not quite. ';
+        reveal.textContent = verdict + (card.dataset.reveal || '');
+        reveal.hidden = false;
+        updateScore();
+      });
+
+      row.appendChild(btn);
+    });
+
+    card.appendChild(row);
+    card.appendChild(reveal);
+  });
+
+  updateScore();
+
   // Delegated so cloned cards in the looping carousels work without rebinding.
   document.addEventListener('click', (event) => {
     const thumb = event.target.closest('.video-thumb');
@@ -480,13 +558,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
+    // One gradient per ray, rebuilt only when the window changes size. Creating
+    // four gradients every frame was pure waste: their shape never depends on
+    // time, only on the viewport.
+    let rayFills = [];
+    const buildFills = () => {
+      rayFills = RAYS.map((ray) => {
+        const beam = ray.width * width;
+        const gradient = ctx.createLinearGradient(-beam / 2, 0, beam / 2, 0);
+        const [r, g, b] = ray.color;
+        gradient.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+        gradient.addColorStop(0.5, 'rgba(' + r + ',' + g + ',' + b + ',1)');
+        gradient.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
+        return gradient;
+      });
+    };
+
     const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // 2x device pixels over a full-screen blended canvas is four times the
+      // fill rate for an effect that is soft by design; 1.5 is indistinguishable.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       width = window.innerWidth;
       height = window.innerHeight;
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      buildFills();
       seedDust();
     };
 
@@ -494,7 +591,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.clearRect(0, 0, width, height);
       ctx.globalCompositeOperation = 'lighter';
 
-      RAYS.forEach((ray) => {
+      RAYS.forEach((ray, index) => {
         const sway = Math.sin(time * ray.speed + ray.phase) * width * 0.06;
         const x = ray.offset * width + sway;
         const beam = ray.width * width;
@@ -503,16 +600,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.save();
         ctx.translate(x, height * 0.5);
         ctx.rotate(ray.tilt);
-        const gradient = ctx.createLinearGradient(-beam / 2, 0, beam / 2, 0);
-        const [r, g, b] = ray.color;
-        gradient.addColorStop(0, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-        gradient.addColorStop(0.5, 'rgba(' + r + ',' + g + ',' + b + ',' + ray.alpha * pulse + ')');
-        gradient.addColorStop(1, 'rgba(' + r + ',' + g + ',' + b + ',0)');
-        ctx.fillStyle = gradient;
+        // The pulse rides on globalAlpha so the gradient itself can stay cached.
+        ctx.globalAlpha = ray.alpha * pulse;
+        ctx.fillStyle = rayFills[index];
         const span = Math.max(width, height) * 2;
         ctx.fillRect(-beam / 2, -span / 2, beam, span);
         ctx.restore();
       });
+      ctx.globalAlpha = 1;
 
       dust.forEach((mote) => {
         const y = ((mote.y - time * mote.drift * 0.02) % 1 + 1) % 1;
@@ -526,9 +621,17 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.globalCompositeOperation = 'source-over';
     };
 
+    // Drifting light and dust move slowly enough that 30fps is imperceptible,
+    // and it halves the work on a machine that is struggling.
+    const FRAME_MS = 1000 / 30;
     let rafId = null;
+    let lastDraw = 0;
     const loop = () => {
-      draw(performance.now() / 1000);
+      const now = performance.now();
+      if (now - lastDraw >= FRAME_MS) {
+        lastDraw = now;
+        draw(now / 1000);
+      }
       rafId = requestAnimationFrame(loop);
     };
 
@@ -574,6 +677,37 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => { parallax(); ticking = false; });
     }, { passive: true });
     parallax();
+  }
+
+  /* ---------- Hero background player ----------
+     A YouTube embed is the heaviest thing on the page: a few hundred KB of
+     player JS plus continuous video decode. Left alone it keeps decoding after
+     the visitor has scrolled past, which on a weak machine is CPU spent on
+     something nobody can see. So the iframe's src is dropped once the hero
+     leaves the viewport and put back when it returns.                        */
+  const bgFrame = document.querySelector('.bg-yt');
+  const heroSection = document.getElementById('hero');
+
+  if (bgFrame && heroSection && 'IntersectionObserver' in window) {
+    const bgSrc = bgFrame.src;
+
+    if (reducedMotion) {
+      bgFrame.removeAttribute('src');
+    } else {
+      const heroWatch = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              if (!bgFrame.src) bgFrame.src = bgSrc;
+            } else if (bgFrame.src) {
+              bgFrame.removeAttribute('src');
+            }
+          });
+        },
+        { threshold: 0 }
+      );
+      heroWatch.observe(heroSection);
+    }
   }
 
   /* ---------- Footer year ---------- */

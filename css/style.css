@@ -83,12 +83,18 @@ img {
   background: var(--bg);
 }
 
+/* The softness is in the gradient, NOT in a filter.
+   These blobs used to carry filter: blur(110px) while their keyframes scaled them.
+   A blurred layer cannot be cached across a scale change, so the browser
+   re-rasterised a 110px blur over a 1000px-wide element every single frame — which
+   measured at 6fps on a mid machine and would crawl on a weak one. A radial
+   gradient with a long, many-stop falloff is visually the same thing and costs
+   nothing: the layer rasterises once and the animation is pure compositing. */
 .ambient-blob {
   position: absolute;
   width: 70vmax;
   height: 70vmax;
   border-radius: 50%;
-  filter: blur(110px);
   opacity: 0.55;
   will-change: transform;
 }
@@ -96,7 +102,13 @@ img {
 .ambient-blob--violet {
   top: -20vmax;
   left: -15vmax;
-  background: radial-gradient(circle at 50% 50%, var(--violet), transparent 65%);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(109, 79, 224, 0.9) 0%,
+    rgba(109, 79, 224, 0.62) 22%,
+    rgba(109, 79, 224, 0.34) 40%,
+    rgba(109, 79, 224, 0.15) 56%,
+    rgba(109, 79, 224, 0.05) 70%,
+    rgba(109, 79, 224, 0) 82%);
   animation: driftOne 34s ease-in-out infinite;
 }
 
@@ -105,7 +117,13 @@ img {
   right: -18vmax;
   width: 60vmax;
   height: 60vmax;
-  background: radial-gradient(circle at 50% 50%, var(--accent), transparent 65%);
+  background: radial-gradient(circle at 50% 50%,
+    rgba(240, 178, 94, 0.9) 0%,
+    rgba(240, 178, 94, 0.6) 22%,
+    rgba(240, 178, 94, 0.32) 40%,
+    rgba(240, 178, 94, 0.14) 56%,
+    rgba(240, 178, 94, 0.04) 70%,
+    rgba(240, 178, 94, 0) 82%);
   opacity: 0.26;
   animation: driftTwo 40s ease-in-out infinite;
 }
@@ -128,11 +146,14 @@ img {
   height: 100%;
 }
 
+/* No mix-blend-mode. "overlay" forces the whole page into a composited blend
+   pass every frame; over a near-black background at 5% opacity it is visually
+   indistinguishable from painting the grain normally, and measured ~20fps
+   cheaper. */
 .ambient-grain {
   position: absolute;
-  inset: -10%;
-  opacity: 0.05;
-  mix-blend-mode: overlay;
+  inset: 0;
+  opacity: 0.055;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -714,6 +735,110 @@ main {
   max-width: 268px;
 }
 
+/* Mixed formats in one grid. Cards sit at the TOP of their row rather than
+   stretching, and each column carries a fixed vertical offset, so a landscape
+   card among verticals reads as a deliberate cascade instead of a hole in the
+   row. The offset is a margin, not a transform, because the transform is already
+   spoken for by the scroll-reveal. */
+.carousel--grid .carousel-track {
+  align-items: start;
+}
+
+.carousel--grid .video-card:nth-child(4n + 2) { margin-top: 30px; }
+.carousel--grid .video-card:nth-child(4n + 3) { margin-top: 14px; }
+.carousel--grid .video-card:nth-child(4n + 4) { margin-top: 44px; }
+
+/* A landscape card would be a stripe at one column wide, so it takes two and
+   drops the width cap the verticals need. */
+.carousel--grid .video-card[data-orientation="wide"] {
+  grid-column: span 2;
+}
+
+.carousel--grid .video-card[data-orientation="wide"] .video-thumb {
+  max-width: none;
+}
+
+/* ============================= GUESS THE METHOD ============================= */
+
+/* Three buttons under a card: was it generated, filmed, or both. Answering is
+   optional and never blocks the work — the row is quiet until hovered, and the
+   card plays whether or not anyone guesses. */
+.guess {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  max-width: 268px;
+}
+
+/* A landscape card is twice as wide as the verticals; letting its buttons
+   stretch to match made them look like a form rather than a quick call. */
+.video-card[data-orientation="wide"] .guess {
+  max-width: 340px;
+}
+
+.guess-btn {
+  flex: 1;
+  padding: 7px 4px 6px;
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  cursor: pointer;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+    background 0.25s var(--ease);
+}
+
+.guess-btn:hover,
+.guess-btn:focus-visible {
+  color: var(--text);
+  border-color: rgba(240, 178, 94, 0.45);
+  background: rgba(240, 178, 94, 0.08);
+}
+
+/* Once answered the row stops being interactive but stays readable: the right
+   answer is marked, and a wrong pick is marked as the one that was chosen. */
+.guess.answered .guess-btn {
+  cursor: default;
+  pointer-events: none;
+}
+
+.guess.answered .guess-btn:not(.is-answer):not(.is-picked) {
+  opacity: 0.32;
+}
+
+/* Muted rather than mint: a neon green would be the brightest thing on a page
+   built out of amber and violet. */
+.guess-btn.is-answer {
+  color: #08150e;
+  background: #5f9e7b;
+  border-color: #5f9e7b;
+  font-weight: 600;
+}
+
+.guess-btn.is-picked:not(.is-answer) {
+  color: #e9b9b9;
+  background: rgba(176, 74, 74, 0.18);
+  border-color: rgba(176, 74, 74, 0.45);
+  text-decoration: line-through;
+}
+
+.guess-reveal {
+  margin-top: 8px;
+  max-width: 268px;
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.video-card[data-orientation="wide"] .guess-reveal {
+  max-width: 420px;
+}
+
 .section-aside {
   margin-top: 44px;
   font-family: var(--font-display);
@@ -1192,6 +1317,13 @@ main {
 
   .carousel--grid .carousel-track {
     grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* nth-child no longer maps to a column, so the cascade comes off. */
+  .carousel--grid .video-card:nth-child(4n + 2),
+  .carousel--grid .video-card:nth-child(4n + 3),
+  .carousel--grid .video-card:nth-child(4n + 4) {
+    margin-top: 0;
   }
 }
 

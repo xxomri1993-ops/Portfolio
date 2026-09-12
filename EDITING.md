@@ -37,6 +37,8 @@ Each video is **one line**. Find the section you want and copy an existing line:
 | `data-yt` | The video's ID — the part of the YouTube link after `/shorts/` or `?v=` or `youtu.be/`. **Not** the whole link. |
 | `data-title` | The label under the card. |
 | `data-orientation` | Leave it out for vertical (Shorts). Add `data-orientation="wide"` for a normal landscape video. Also accepts `"square"` and `"portrait"`. |
+| `data-answer` | The quiz answer: `ai`, `real` or `mix`. **Leave it out and that card has no question on it.** |
+| `data-reveal` | The sentence shown after someone guesses, e.g. "Only the three testimonials were filmed." |
 
 **To find a video ID:** from `https://youtube.com/shorts/K6O6zPC6_rU?feature=share`
 the ID is `K6O6zPC6_rU` — everything between the last `/` and the `?`.
@@ -52,6 +54,40 @@ appear when a row has more than fits on screen.
 
 **The video must be Public or Unlisted on YouTube.** Private videos won't play, and
 neither will videos with embedding turned off in YouTube Studio.
+
+---
+
+## The guessing game
+
+Each card in **Performance Ads** can carry a question: *was this AI, real, or a mix?*
+Three buttons appear under the card, and the line below the grid keeps score.
+
+```html
+<article class="video-card" data-yt="AUdQQy_OMtI" data-title="Face Cream"
+  data-answer="mix" data-reveal="Only the three testimonials were filmed."></article>
+```
+
+- `data-answer` must be exactly `ai`, `real` or `mix` — lowercase.
+- `data-reveal` is the payoff. Keep it to one short sentence; it's the most
+  interesting part, because it tells the visitor what they should have spotted.
+- **To leave a video out of the game**, delete both attributes. The card still
+  shows and still plays — it just has no question. That's the right call for
+  anything the three answers don't really fit, like a motion-graphics piece.
+- The score counts only the cards that have a `data-answer`, so you never have to
+  keep a total up to date anywhere.
+
+Answering is optional and never blocks the video. Nothing is saved — a reload
+starts the game over.
+
+### The line under the grid
+
+```html
+<p class="section-aside" id="quizScore" data-prompt="...">...</p>
+```
+
+`data-prompt` is what it says before anyone has guessed; the visible text should
+match it. Once someone answers, the line is replaced with their score, so you only
+need to write the prompt.
 
 ---
 
@@ -91,6 +127,16 @@ after `playlist=`. Both have to match or it plays once and stops instead of loop
 
 If you swap in a **vertical** video, add `bg-yt--vertical` to the class:
 `class="bg-yt bg-yt--vertical"`.
+
+---
+
+## Which section comes first
+
+The order of the two work sections on the page is just the order their
+`<section>` blocks appear inside `<main id="work">` in `index.html`. TV
+Commercials is first. To swap them, move a whole `<section class="work-section">`
+block above or below the other — and move its matching `<li>` in the menu at the
+top of the file so the two stay in the same order.
 
 ---
 
@@ -153,6 +199,8 @@ me and I'll put it back in a minute.
 | Menu labels | `class="nav-link"` |
 | Big opening headline + tagline | `class="hero-name"` |
 | The big statement line | `class="statement-text"` |
+| Quiz answers and reveals | `data-answer` |
+| The score line under the grid | `id="quizScore"` |
 | Tool list | `class="tools-list"` |
 | Section headings | `class="section-title"` |
 | The videos | `class="video-card"` |

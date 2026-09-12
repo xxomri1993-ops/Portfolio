@@ -41,8 +41,8 @@
     <!-- EDIT: menu labels. The href and data-section must keep matching a section id below. -->
     <nav class="main-nav" aria-label="Primary">
       <ul class="nav-list">
-        <li><a class="nav-link" data-section="performance-ads" href="#performance-ads">Performance Ads</a></li>
         <li><a class="nav-link" data-section="tv-commercials" href="#tv-commercials">TV Commercials</a></li>
+        <li><a class="nav-link" data-section="performance-ads" href="#performance-ads">Performance Ads</a></li>
         <li><a class="nav-link" data-section="process" href="#process">Process</a></li>
         <li class="nav-cta-mobile"><a class="nav-cta" href="#contact">Get in touch</a></li>
       </ul>
@@ -73,7 +73,7 @@
     <p class="hero-eyebrow">Portfolio</p>
     <h1 class="hero-name">Omri Tabachnik</h1>
     <p class="hero-title">AI Video Editor &amp; <em>Content Producer</em></p>
-    <p class="hero-tagline">I combine a performance-first mindset with a full AI production pipeline — delivering broadcast-quality results without a crew, a camera, or a lengthy production cycle.</p>
+    <p class="hero-tagline">A performance-first mindset and a full generative pipeline &mdash; broadcast-quality work delivered in days, generated, filmed, or a mix of the two.</p>
 
     <div class="hero-actions">
       <a href="#work" class="btn btn--primary">
@@ -99,7 +99,7 @@
 -->
 <section class="statement">
   <div class="statement-inner">
-  <p class="statement-text">I make AI ads that pass for <em>real</em> &mdash; and sell like it.</p>
+  <p class="statement-text">Ads that pass for <em>real</em> &mdash; and sell like it.</p>
   <!-- EDIT: the line under the statement -->
   <p class="statement-note">In-house at <strong>Particle For Men</strong> &mdash; UGC, paid social and broadcast, produced with AI, live action, or a mix of the two.</p>
   </div>
@@ -136,6 +136,36 @@
 -->
 <main id="work">
 
+  <section class="work-section" id="tv-commercials" data-section="tv-commercials">
+    <div class="section-inner">
+      <header class="section-header">
+        <div class="section-heading">
+          <!-- EDIT: section heading and intro -->
+          <h2 class="section-title">TV Commercials</h2>
+          <p class="section-subtitle">Broadcast spots for the U.S. market, generated end to end &mdash; no camera, no crew, no shoot day. Both aired.</p>
+        </div>
+        <div class="section-tools">
+          <span class="section-count"></span>
+          <div class="carousel-nav">
+            <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="carousel">
+        <div class="carousel-track">
+          <article class="video-card" data-yt="Umf475f98Ns" data-title="Gravit&eacute; Cologne &mdash; Why Would You" data-orientation="wide"></article>
+          <article class="video-card" data-yt="EDsswArNDEU" data-title="Gravit&eacute; Cologne &mdash; The Conversation" data-orientation="wide"></article>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="work-section" id="performance-ads" data-section="performance-ads">
     <div class="section-inner">
       <header class="section-header">
@@ -159,48 +189,31 @@
 
       <div class="carousel carousel--grid carousel--no-labels">
         <div class="carousel-track">
-          <article class="video-card" data-yt="AUdQQy_OMtI" data-title="Face Cream"></article>
-          <article class="video-card" data-yt="BwNXKIyPnCs" data-title="Ab Firming Cream"></article>
-          <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Face Cream &mdash; Memorial Day"></article>
-          <article class="video-card" data-yt="yR9HAw4kv8M" data-title="Gravit&eacute; &mdash; July 4th Sale"></article>
-          <article class="video-card" data-yt="daZ4RIkHWvg" data-title="Deodorant"></article>
-          <article class="video-card" data-yt="K6O6zPC6_rU" data-title="Face Cream"></article>
-          <article class="video-card" data-yt="nR0WWfD5hzQ" data-title="Sunscreen"></article>
-          <article class="video-card" data-yt="qEQFdY44A8Y" data-title="Performance Ad"></article>
+          <!-- EDIT: the videos. One line each. data-answer is the quiz answer
+               ("ai", "real" or "mix"); data-reveal is the sentence shown once the
+               visitor has guessed. Leave BOTH out and that card simply has no
+               question on it. -->
+          <article class="video-card" data-yt="AUdQQy_OMtI" data-title="Face Cream"
+            data-answer="mix" data-reveal="Only the three testimonials were filmed. Everything else was generated."></article>
+          <article class="video-card" data-yt="aaKE8557U48" data-title="Father&rsquo;s Day"
+            data-answer="ai" data-reveal="Every frame generated."></article>
+          <article class="video-card" data-yt="BwNXKIyPnCs" data-title="Ab Firming Cream"
+            data-answer="mix" data-reveal="One filmed shot. The rest generated around it."></article>
+          <article class="video-card" data-yt="6cqltnpe2IQ" data-title="comparisons.org"
+            data-answer="real" data-reveal="Filmed, start to finish."></article>
+          <article class="video-card" data-yt="qEQFdY44A8Y" data-title="Collection"></article>
+          <article class="video-card" data-yt="qlN-RAD2Ys8" data-title="Face Cream &mdash; Memorial Day"
+            data-answer="ai" data-reveal="Every frame generated."></article>
+          <article class="video-card" data-yt="NFsDbdWQqCg" data-title="Motion Graphics"></article>
+          <article class="video-card" data-yt="nR0WWfD5hzQ" data-title="Sunscreen"
+            data-answer="mix" data-reveal="Generated, then cut together with stock footage."></article>
+          <article class="video-card" data-yt="pew24DC1Q1E" data-title="Dr Gundry &mdash; Pre-VSL" data-orientation="wide"
+            data-answer="real" data-reveal="Filmed, start to finish."></article>
         </div>
       </div>
-      <!-- EDIT: the line under the Performance Ads grid. -->
-      <p class="section-aside">All of it made with AI. <em>Could you tell?</em></p>
-    </div>
-  </section>
-
-  <section class="work-section" id="tv-commercials" data-section="tv-commercials">
-    <div class="section-inner">
-      <header class="section-header">
-        <div class="section-heading">
-          <!-- EDIT: section heading and intro -->
-          <h2 class="section-title">TV Commercials</h2>
-          <p class="section-subtitle">Full AI production pipeline &ndash; from concept to broadcast-ready delivery, without a camera or crew.</p>
-        </div>
-        <div class="section-tools">
-          <span class="section-count"></span>
-          <div class="carousel-nav">
-            <button class="carousel-arrow prev" aria-label="Scroll TV Commercials left">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 5L8 12L15 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-            <button class="carousel-arrow next" aria-label="Scroll TV Commercials right">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5L16 12L9 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div class="carousel">
-        <div class="carousel-track">
-          <article class="video-card" data-yt="Umf475f98Ns" data-title="Gravit&eacute; Cologne &mdash; Why Would You" data-orientation="wide"></article>
-          <article class="video-card" data-yt="EDsswArNDEU" data-title="Gravit&eacute; Cologne &mdash; The Conversation" data-orientation="wide"></article>
-        </div>
-      </div>
+      <!-- EDIT: the line under the grid. It starts as the prompt and turns into
+           the visitor's score once they start guessing. -->
+      <p class="section-aside" id="quizScore" data-prompt="Generated, filmed, or a mix of the two. &lt;em&gt;Call it under each one.&lt;/em&gt;">Generated, filmed, or a mix of the two. <em>Call it under each one.</em></p>
     </div>
   </section>
 
@@ -228,7 +241,7 @@
       <li class="process-step">
         <span class="step-num">02</span>
         <h3 class="step-title">Generation</h3>
-        <p class="step-body">Characters, environments and coverage produced with generative video and image models, held to one visual language.</p>
+        <p class="step-body">Characters, environments and coverage built with generative video and image models &mdash; mixed with filmed or stock plates where the brief calls for them, held to one visual language.</p>
       </li>
       <li class="process-step">
         <span class="step-num">03</span>
