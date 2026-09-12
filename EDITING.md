@@ -96,9 +96,13 @@ need to write the prompt.
 Each section is one or the other, set by a single class in `index.html`:
 
 ```html
-<div class="carousel carousel--grid">   <!-- grid: everything visible at once -->
-<div class="carousel">                  <!-- row: scrolls sideways, loops forever -->
+<div class="carousel carousel--grid">              <!-- grid, 4 across -->
+<div class="carousel carousel--grid carousel--duo"> <!-- grid, 2 across -->
+<div class="carousel">                              <!-- row: scrolls sideways, loops forever -->
 ```
+
+`carousel--duo` is what TV Commercials uses: two big landscape videos side by
+side, one above the other on a phone. It suits a section with two or four videos.
 
 Add or delete `carousel--grid` to switch. Adding `carousel--no-labels` alongside it
 hides the caption under each card, for when the thumbnails speak for themselves —

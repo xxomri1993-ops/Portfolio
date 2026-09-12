@@ -722,6 +722,22 @@ main {
   flex: initial;
 }
 
+/* Two landscape videos side by side, filling the row evenly. A looping scroller
+   for a set of two was always slightly absurd: it had nothing to loop through
+   and only fitted on screens wider than 1600px. */
+.carousel--duo .carousel-track {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 26px;
+}
+
+/* A scrolling row that happens to fit has nothing to scroll, so it can be
+   centred. Centring one that overflows would make its first card unreachable,
+   which is why this waits for the class the carousel sets after measuring. */
+.carousel--fits .carousel-track {
+  justify-content: center;
+  mask-image: none;
+}
+
 /* Hides the captions where the artwork already says what the video is. The title
    still reaches screen readers through the button label, and still shows in the
    player when the video opens. */
@@ -744,14 +760,23 @@ main {
   align-items: start;
 }
 
-.carousel--grid .video-card:nth-child(4n + 2) { margin-top: 30px; }
-.carousel--grid .video-card:nth-child(4n + 3) { margin-top: 14px; }
-.carousel--grid .video-card:nth-child(4n + 4) { margin-top: 44px; }
+.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 2) { margin-top: 30px; }
+.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 3) { margin-top: 14px; }
+.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 4) { margin-top: 44px; }
 
 /* A landscape card would be a stripe at one column wide, so it takes two and
    drops the width cap the verticals need. */
-.carousel--grid .video-card[data-orientation="wide"] {
+.carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
   grid-column: span 2;
+}
+
+/* A wide card closing the grid sits alone on its row. Giving it the full row and
+   centring it works at every column count — "column 2 of 4" would be centred at
+   four columns, off-centre at three and wrapped at two. */
+.carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"]:last-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 640px);
 }
 
 .carousel--grid .video-card[data-orientation="wide"] .video-thumb {
@@ -1315,7 +1340,7 @@ main {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .carousel--grid .carousel-track {
+  .carousel--grid:not(.carousel--duo) .carousel-track {
     grid-template-columns: repeat(3, 1fr);
   }
 
@@ -1325,6 +1350,8 @@ main {
   .carousel--grid .video-card:nth-child(4n + 4) {
     margin-top: 0;
   }
+
+
 }
 
 @media (max-width: 860px) {
@@ -1390,9 +1417,15 @@ main {
     gap: 22px;
   }
 
-  .carousel--grid .carousel-track {
+  .carousel--grid:not(.carousel--duo) .carousel-track {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px 14px;
+  }
+
+  /* Two 16:9 videos side by side on a phone would be thumbnails. */
+  .carousel--duo .carousel-track {
+    grid-template-columns: 1fr;
+    gap: 26px;
   }
 
   .work-section,

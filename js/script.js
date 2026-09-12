@@ -419,12 +419,15 @@ document.addEventListener('DOMContentLoaded', () => {
       track.querySelectorAll('[data-clone]').forEach((clone) => clone.remove());
       setWidth = measured;
 
-      // A row that already fits has nothing to scroll to: no clones, no controls.
+      // A row that already fits has nothing to scroll to: no clones, no controls,
+      // and it can sit centred instead of starting at the left edge.
       if (setWidth <= track.clientWidth) {
         wrapUnit = 0;
+        carousel.classList.add('carousel--fits');
         if (carouselNav) carouselNav.hidden = true;
         return;
       }
+      carousel.classList.remove('carousel--fits');
       if (carouselNav) carouselNav.hidden = false;
 
       wrapUnit = setWidth * Math.ceil(track.clientWidth / setWidth);
