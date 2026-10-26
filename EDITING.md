@@ -106,7 +106,12 @@ Each section is one or the other, set by a single class in `index.html`:
 above the other on a phone, with an odd last one centred on its own row. It
 suits a section with an even number of landscape videos.
 
-TV Commercials is a scrolling row. Performance Ads is a four-across grid.
+`carousel--peek` is what TV Commercials uses: one video centred and whole, with
+the previous and next sliced by the edges so you can see there is more. The
+arrows sit on the row itself, left and right, and each click moves exactly one
+video. Use it for a section where each video deserves to be looked at on its own.
+
+Performance Ads is a four-across grid.
 
 Add or delete `carousel--grid` to switch. Adding `carousel--no-labels` alongside it
 hides the caption under each card, for when the thumbnails speak for themselves —

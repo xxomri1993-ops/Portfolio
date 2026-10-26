@@ -773,6 +773,13 @@ main {
 .carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 3) { margin-top: 14px; }
 .carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 4) { margin-top: 44px; }
 
+/* The cascade is for the vertical cards. A landscape card spans two columns, so
+   nth-child stops lining up with a column for it — and an offset on one half of
+   a landscape pair just knocks the two out of line with each other. */
+.carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
+  margin-top: 0;
+}
+
 /* A landscape card would be a stripe at one column wide, so it takes two and
    drops the width cap the verticals need. */
 .carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
@@ -786,6 +793,16 @@ main {
   grid-column: 1 / -1;
   justify-self: center;
   width: min(100%, 640px);
+}
+
+/* Two landscape cards next to each other already fill a four-column row between
+   them, so the closing card does not break out and centre — that rule is for a
+   wide card that would otherwise sit alone. */
+.carousel--grid:not(.carousel--duo)
+  .video-card[data-orientation="wide"] + .video-card[data-orientation="wide"]:last-child {
+  grid-column: span 2;
+  justify-self: stretch;
+  width: auto;
 }
 
 .carousel--grid .video-card[data-orientation="wide"] .video-thumb {
@@ -880,6 +897,68 @@ main {
 
 .video-card[data-orientation="wide"] .guess-reveal {
   max-width: 420px;
+}
+
+/* ============================= PEEK CAROUSEL =============================
+
+   One video centred and whole, with the next and previous sliced by the edges
+   of the row. The slice is the affordance: it says there is more without
+   needing a caption to say so. Card width comes from the container rather than
+   from card height, so the same proportion holds on a phone. */
+.carousel--peek .carousel-track {
+  /* The old trailing fade softened exactly the edge that now has a job to do. */
+  mask-image: none;
+  gap: 22px;
+  padding: 4px 0 14px;
+}
+
+.carousel--peek .video-card {
+  flex: 0 0 min(58%, 820px);
+  scroll-snap-align: center;
+}
+
+.carousel--peek .video-thumb {
+  height: auto;
+  width: 100%;
+}
+
+/* ---- arrows, sitting on the row rather than above it ---- */
+.carousel {
+  position: relative;
+}
+
+.carousel--peek .carousel-nav {
+  position: absolute;
+  inset: 0;
+  display: block;
+  /* The bar itself must not swallow clicks meant for the cards behind it. */
+  pointer-events: none;
+  z-index: 4;
+}
+
+.carousel--peek .carousel-arrow {
+  position: absolute;
+  /* Centred on the thumbnail, not on the whole row — the caption underneath
+     would otherwise pull the arrows visibly low. --thumb-h is measured in
+     script.js and refreshed on resize, because the caption's height changes
+     with the breakpoint and a hard-coded guess was 25px out. */
+  top: calc(4px + var(--thumb-h, 300px) / 2);
+  transform: translateY(-50%);
+  pointer-events: auto;
+  width: 46px;
+  height: 46px;
+  background: rgba(10, 8, 18, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+}
+
+.carousel--peek .carousel-arrow.prev {
+  left: 14px;
+}
+
+.carousel--peek .carousel-arrow.next {
+  right: 14px;
 }
 
 .section-aside {
@@ -1440,14 +1519,6 @@ main {
     gap: 24px 14px;
   }
 
-  /* Card height drives card width, so a 16:9 card in a scrolling row ends up
-     wider than a phone screen — you could never see a whole frame at once.
-     Below this width the landscape cards take their size from the viewport
-     instead, and the aspect ratio sets the height. */
-  .carousel:not(.carousel--grid) .video-card[data-orientation="wide"] .video-thumb {
-    height: auto;
-    width: min(84vw, 460px);
-  }
 
   /* Two 16:9 videos side by side on a phone would be thumbnails. */
   .carousel--duo .carousel-track {

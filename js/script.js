@@ -419,8 +419,18 @@ document.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => { wrapping = false; });
     }
 
+    // The arrows sit on the thumbnail, and the caption below it changes height
+    // with the breakpoint, so the centre line is measured rather than assumed.
+    const publishThumbHeight = () => {
+      const thumb = track.querySelector('.video-thumb');
+      if (!thumb) return;
+      const h = thumb.getBoundingClientRect().height;
+      if (h > 0) carousel.style.setProperty('--thumb-h', h + 'px');
+    };
+
     const build = () => {
       if (!originals.length) return;
+      publishThumbHeight();
       const measured = measureSet();
       if (measured <= 0) return;
       // Card widths haven't changed and the clones are already in place — rebuilding
@@ -460,27 +470,53 @@ document.addEventListener('DOMContentLoaded', () => {
       jumpTo(wrapUnit);
     };
 
-    track.addEventListener('scroll', () => {
+    // An arrow click animates the scroll. Wrapping mid-animation cancels it, and
+    // mandatory snapping then drags the row back where it started — which looked
+    // like the Previous arrow simply not working on the second press. So while a
+    // click-driven scroll is in flight the wrap waits, and runs once the row has
+    // settled. A finger drag still wraps immediately, which is what keeps the
+    // loop seamless at speed.
+    let animating = false;
+    let settleTimer = null;
+
+    const wrapIfNeeded = () => {
       if (wrapping || !wrapUnit) return;
       if (track.scrollLeft < wrapUnit * 0.5) {
         jumpTo(track.scrollLeft + wrapUnit);
       } else if (track.scrollLeft > wrapUnit * 1.5) {
         jumpTo(track.scrollLeft - wrapUnit);
       }
+    };
+
+    track.addEventListener('scroll', () => {
+      if (wrapping || !wrapUnit) return;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(() => {
+        animating = false;
+        wrapIfNeeded();
+      }, 140);
+      if (!animating) wrapIfNeeded();
     }, { passive: true });
 
-    const step = () => Math.max(track.clientWidth * 0.8, 200);
+    // A peek row advances exactly one card per click: the whole point is that a
+    // single video sits centred, so moving by most of a viewport would overshoot.
+    const step = () => {
+      if (carousel.classList.contains('carousel--peek') && originals.length) {
+        const styles = getComputedStyle(track);
+        const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+        return originals[0].getBoundingClientRect().width + gap;
+      }
+      return Math.max(track.clientWidth * 0.8, 200);
+    };
 
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => {
-        track.scrollBy({ left: -step(), behavior: reducedMotion ? 'auto' : 'smooth' });
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => {
-        track.scrollBy({ left: step(), behavior: reducedMotion ? 'auto' : 'smooth' });
-      });
-    }
+    const nudge = (direction) => {
+      animating = !reducedMotion;
+      track.scrollBy({ left: direction * step(), behavior: reducedMotion ? 'auto' : 'smooth' });
+      if (reducedMotion) wrapIfNeeded();
+    };
+
+    if (prevBtn) prevBtn.addEventListener('click', () => nudge(-1));
+    if (nextBtn) nextBtn.addEventListener('click', () => nudge(1));
 
     let resizeTimer;
     window.addEventListener('resize', () => {
