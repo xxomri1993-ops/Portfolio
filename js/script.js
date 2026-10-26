@@ -335,6 +335,57 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', clearPreview);
   }
 
+  /* ---------- Centre a short final row ----------
+     Seven vertical cards cannot fill rows of four, so the last row comes up
+     short. Left alone it sits against the left edge and the grid looks lopsided.
+     The leftover width is measured and half of it is given to the first card of
+     that row, which centres the row without caring how many columns there are or
+     how many cards ended up in it — so this keeps working if a video is added.
+     Layout offsets are used rather than bounding boxes, because the cards carry
+     a transform while they are still revealing.                               */
+  const centreShortRow = (grid) => {
+    const track = grid.querySelector('.carousel-track');
+    if (!track) return;
+    const cards = Array.from(track.querySelectorAll('.video-card:not([data-clone])'));
+    cards.forEach((card) => { card.style.left = ''; });
+    if (cards.length < 2) return;
+
+    const rows = [];
+    cards.forEach((card) => {
+      const row = rows.find((candidate) => Math.abs(candidate.top - card.offsetTop) < 2);
+      if (row) row.cards.push(card);
+      else rows.push({ top: card.offsetTop, cards: [card] });
+    });
+    if (rows.length < 2) return;
+
+    const styles = getComputedStyle(track);
+    const inner = track.clientWidth
+      - (parseFloat(styles.paddingLeft) || 0)
+      - (parseFloat(styles.paddingRight) || 0);
+
+    const last = rows[rows.length - 1].cards;
+    const width = last[last.length - 1].offsetLeft + last[last.length - 1].offsetWidth
+      - last[0].offsetLeft;
+    // Nudged rather than margined: a margin on a grid item eats into its own
+    // cell and shrinks the card instead of moving the row. An offset leaves the
+    // layout untouched, and unlike a transform it does not collide with the one
+    // the reveal animation is already using.
+    const leftover = inner - width;
+    if (leftover > 1) {
+      last.forEach((card) => { card.style.left = (leftover / 2) + 'px'; });
+    }
+  };
+
+  const shortRowGrids = document.querySelectorAll('.carousel--grid');
+  const centreShortRows = () => shortRowGrids.forEach(centreShortRow);
+  centreShortRows();
+  window.addEventListener('load', centreShortRows);
+  let centreTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(centreTimer);
+    centreTimer = setTimeout(centreShortRows, 150);
+  });
+
   // A grid shows everything at once, so its scroll controls are meaningless.
   document.querySelectorAll('.carousel--grid').forEach((grid) => {
     const section = grid.closest('section');

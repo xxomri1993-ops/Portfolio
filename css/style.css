@@ -754,10 +754,21 @@ main {
   display: none;
 }
 
+/* The cap keeps the cards at the size they were tuned to, but a 268px thumb in
+   a 309px cell was hugging the left of every cell — so each row sat a little
+   left of where it looked like it should. Centring the contents in the cell is
+   what squares the grid up; the cap stays. */
 .carousel--grid .video-thumb {
   height: auto;
   width: 100%;
   max-width: 268px;
+  margin-inline: auto;
+}
+
+.carousel--grid .guess,
+.carousel--grid .guess-reveal,
+.carousel--grid .guess-placeholder {
+  margin-inline: auto;
 }
 
 /* Mixed formats in one grid. Cards sit at the TOP of their row rather than
@@ -977,6 +988,8 @@ main {
    ratio, so vertical, square and landscape videos can sit in one row without the
    row going ragged. */
 .video-card {
+  /* So a short final row can be nudged into the centre from script.js. */
+  position: relative;
   flex: 0 0 auto;
   scroll-snap-align: start;
   perspective: 900px;
