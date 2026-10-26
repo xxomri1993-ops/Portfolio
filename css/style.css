@@ -730,6 +730,15 @@ main {
   gap: 30px 26px;
 }
 
+/* An odd number of videos in the two-up grid leaves the last one alone on its
+   row. It takes the whole row and centres, the same way the closing card of the
+   four-across grid does, rather than sitting against the left edge. */
+.carousel--duo .video-card:nth-child(odd):last-child {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 640px);
+}
+
 /* A scrolling row that happens to fit has nothing to scroll, so it can be
    centred. Centring one that overflows would make its first card unreachable,
    which is why this waits for the class the carousel sets after measuring. */
