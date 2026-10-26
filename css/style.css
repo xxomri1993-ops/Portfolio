@@ -769,16 +769,9 @@ main {
   align-items: start;
 }
 
-.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 2) { margin-top: 30px; }
-.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 3) { margin-top: 14px; }
-.carousel--grid:not(.carousel--duo) .video-card:nth-child(4n + 4) { margin-top: 44px; }
-
-/* The cascade is for the vertical cards. A landscape card spans two columns, so
-   nth-child stops lining up with a column for it — and an offset on one half of
-   a landscape pair just knocks the two out of line with each other. */
-.carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
-  margin-top: 0;
-}
+/* No per-column offsets. A staggered cascade was meant to give the grid some
+   movement, but with mixed formats in it the offsets read as cards failing to
+   line up rather than as a deliberate rhythm. Rows are square. */
 
 /* A landscape card would be a stripe at one column wide, so it takes two and
    drops the width cap the verticals need. */
@@ -1441,11 +1434,20 @@ main {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  /* nth-child no longer maps to a column, so the cascade comes off. */
-  .carousel--grid .video-card:nth-child(4n + 2),
-  .carousel--grid .video-card:nth-child(4n + 3),
-  .carousel--grid .video-card:nth-child(4n + 4) {
-    margin-top: 0;
+  /* Two columns out of three leaves a hole beside every landscape card. At this
+     width they take the whole row instead, capped so they do not tower over the
+     vertical cards. */
+  .carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 620px);
+  }
+
+  /* With the landscape cards mid-grid, three columns stranded a single vertical
+     card between two full-width bands. Below four columns they move to the end,
+     so the vertical cards stay one uninterrupted block. */
+  .carousel--grid:not(.carousel--duo) .video-card[data-orientation="wide"] {
+    order: 2;
   }
 
 
