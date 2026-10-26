@@ -102,8 +102,11 @@ Each section is one or the other, set by a single class in `index.html`:
 <div class="carousel">                              <!-- row: scrolls sideways, loops forever -->
 ```
 
-`carousel--duo` is what TV Commercials uses: two big landscape videos side by
-side, one above the other on a phone. It suits a section with two or four videos.
+`carousel--duo` is a two-across grid: big landscape videos side by side, one
+above the other on a phone, with an odd last one centred on its own row. It
+suits a section with an even number of landscape videos.
+
+TV Commercials is a scrolling row. Performance Ads is a four-across grid.
 
 Add or delete `carousel--grid` to switch. Adding `carousel--no-labels` alongside it
 hides the caption under each card, for when the thumbnails speak for themselves —

@@ -1440,6 +1440,15 @@ main {
     gap: 24px 14px;
   }
 
+  /* Card height drives card width, so a 16:9 card in a scrolling row ends up
+     wider than a phone screen — you could never see a whole frame at once.
+     Below this width the landscape cards take their size from the viewport
+     instead, and the aspect ratio sets the height. */
+  .carousel:not(.carousel--grid) .video-card[data-orientation="wide"] .video-thumb {
+    height: auto;
+    width: min(84vw, 460px);
+  }
+
   /* Two 16:9 videos side by side on a phone would be thumbnails. */
   .carousel--duo .carousel-track {
     grid-template-columns: 1fr;
